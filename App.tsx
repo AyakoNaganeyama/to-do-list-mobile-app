@@ -4,16 +4,38 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"; //h
 import { NavigationContainer } from "@react-navigation/native";
 import List from "./app/screens/List";
 import Details from "./app/screens/Details";
+import Login from "./app/screens/Login";
+import { User } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { fireAuth } from "./firebaseConfig";
 
 const Stack = createNativeStackNavigator();
 
+const InsideStack = createNativeStackNavigator();
+
+function InsideLayout() {
+  return (
+    <InsideStack.Navigator>
+      <InsideStack.Screen name="my dotos" component={List} />
+    </InsideStack.Navigator>
+  );
+}
 export default function App() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    onAuthStateChanged(fireAuth, (user) => {
+      console.log(user);
+      setUser(user);
+    });
+  }, []);
+
   //Using Stack navigator
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="my dotos" component={List} />
-        <Stack.Screen name="details" component={Details} />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );

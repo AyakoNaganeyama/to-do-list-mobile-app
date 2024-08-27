@@ -1,9 +1,25 @@
-import { View, Text, Button, TextInput, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
-import { addDoc, collection, onSnapshot } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { database } from "../../firebaseConfig";
 import { StyleSheet } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Entypo } from "@expo/vector-icons";
 
 export interface Todo {
   title: string;
@@ -44,7 +60,31 @@ const List = ({ navigation }: any) => {
   };
 
   const renderTodo = ({ item }: any) => {
-    return <Text>Test{item.title}</Text>;
+    const ref = doc(database, `todos/${item.id}`);
+    const toggleDone = async () => {
+      updateDoc(ref, { done: !item.done });
+    };
+    const deleteItem = async () => {
+      deleteDoc(ref);
+    };
+
+    return (
+      <View>
+        <TouchableOpacity onPress={toggleDone}>
+          {!item.done && (
+            <Ionicons name="checkmark-circle" size={24} color="green" />
+          )}
+          {item.done && <Entypo name="circle" size={24} color="gray" />}
+          <Text>Test {item.title}</Text>
+        </TouchableOpacity>
+        <Ionicons
+          name="trash-bin-outline"
+          size={24}
+          color="red"
+          onPress={deleteItem}
+        />
+      </View>
+    );
   };
 
   return (
