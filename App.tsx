@@ -8,6 +8,7 @@ import Details from "./app/screens/Details";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  //Using Stack navigator
   return (
     <NavigationContainer>
       <Stack.Navigator>
