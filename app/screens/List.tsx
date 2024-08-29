@@ -117,5 +117,7 @@ const List = ({ navigation }: any) => {
 export default List;
 
 const styles = StyleSheet.create({
-  containor: {},
+  listContainer: {
+    flexDirection: "row",
+  },
 });

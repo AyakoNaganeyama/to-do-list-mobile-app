@@ -34,9 +34,15 @@ export default function App() {
   //Using Stack navigator
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      {/* <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+
+      {/*Temporally*/}
+      <InsideStack.Navigator>
+        <InsideStack.Screen name="my dotos" component={List} />
+      </InsideStack.Navigator>
+      {/*Temporally*/}
     </NavigationContainer>
   );
 }
