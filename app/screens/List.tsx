@@ -14,6 +14,7 @@ import { Entypo } from "@expo/vector-icons";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import useUserStore from "../store/authStore";
 
 //object of todo
 export interface Todo {
@@ -27,6 +28,8 @@ const List = ({ navigation }: any) => {
   const [todos, setTodos] = useState<Todo[]>([]); // array of todo
   const [todo, setTodo] = useState("");
   const [done, isDone] = useState(false);
+  const globalLogout = useUserStore((state) => state.clearUser);
+  const globalUser = useUserStore((state) => state.user);
 
   useEffect(() => {
     const getTodos = async () => {
@@ -46,6 +49,11 @@ const List = ({ navigation }: any) => {
     // Fetch todos when the component mounts
     getTodos();
   }, []);
+
+  const logout = async () => {
+    globalLogout();
+    console.log("Zustand", globalUser);
+  };
 
   const addTodo = async (title: string) => {
     const newTodo: Todo = {
@@ -183,6 +191,8 @@ const List = ({ navigation }: any) => {
           ))}
         </View>
       )}
+
+      <Button onPress={() => logout()} title="Logout" />
     </View>
   );
 };

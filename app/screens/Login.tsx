@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, SafeAreaView } from "react-native";
 import React from "react";
 import { useState } from "react";
 import {
@@ -24,6 +24,7 @@ const Login = () => {
   const [isAccount, setisAccount] = useState(false);
 
   const globalLogin = useUserStore((state) => state.setUser);
+  const globalLogout = useUserStore((state) => state.clearUser);
 
   // Access the user state from Zustand store
   const globalUser = useUserStore((state) => state.user);
@@ -105,23 +106,29 @@ const Login = () => {
     }
   };
 
+  const logout = async (email: string, password: string) => {
+    globalLogout();
+  };
+
   return (
-    <View>
-      <TextInput
-        placeholder="enter email"
-        onChangeText={(text: string) => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        placeholder="enter pass"
-        onChangeText={(text: string) => setPass(text)}
-        value={pass}
-      />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View>
+        <TextInput
+          placeholder="enter email"
+          onChangeText={(text: string) => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          placeholder="enter pass"
+          onChangeText={(text: string) => setPass(text)}
+          value={pass}
+        />
 
-      <Button onPress={() => signUp(email, pass)} title="CreateAccount" />
+        <Button onPress={() => signUp(email, pass)} title="CreateAccount" />
 
-      <Button onPress={() => login(email, pass)} title="Login" />
-    </View>
+        <Button onPress={() => login(email, pass)} title="Login" />
+      </View>
+    </SafeAreaView>
   );
 };
 
