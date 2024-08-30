@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Button,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Button, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -16,28 +9,32 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import useUserStore from "../store/authStore";
 
-//object of todo
+// todo class
 export interface Todo {
   title: string;
   done: boolean;
   id: string;
+  uid: string;
 }
 
 //todo list page
 const List = ({ navigation }: any) => {
-  const [todos, setTodos] = useState<Todo[]>([]); // array of todo
-  const [todo, setTodo] = useState("");
-  const [done, isDone] = useState(false);
-  const globalLogout = useUserStore((state) => state.clearUser);
-  const globalUser = useUserStore((state) => state.user);
+  const [todos, setTodos] = useState<Todo[]>([]); // array of todo, initially empty
+  const [todo, setTodo] = useState(""); // each todo
+  const globalLogout = useUserStore((state) => state.clearUser); // logout function from zustand
+  const globalUser = useUserStore((state) => state.user); // user from zustand
 
   useEffect(() => {
+    //everytime this page loads, get list of dotos from database
     const getTodos = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem("todos"); // Fetch todos from AsyncStorage
         if (jsonValue != null) {
           const objects = JSON.parse(jsonValue);
-          setTodos(objects); // Set fetched todos to state
+          const userTodos = objects.filter(
+            (todo: Todo) => todo.uid === globalUser?.uid
+          );
+          setTodos(userTodos); // Set fetched todos to state
         } else {
           setTodos([]); // Initialize with an empty array if no data is found
         }
@@ -60,6 +57,7 @@ const List = ({ navigation }: any) => {
       title: title,
       done: false,
       id: uuid.v4() as string,
+      uid: globalUser?.uid || "",
     };
 
     try {
@@ -81,7 +79,11 @@ const List = ({ navigation }: any) => {
       // Save the updated list back to AsyncStorage
       const updatedJsonValue = JSON.stringify(todos);
       await AsyncStorage.setItem("todos", updatedJsonValue);
-      setTodos(todos);
+
+      const userTodos = todos.filter(
+        (todo: Todo) => todo.uid === globalUser?.uid
+      );
+      setTodos(userTodos);
       setTodo("");
       console.log("Todo added successfully:", newTodo);
     } catch (e) {
