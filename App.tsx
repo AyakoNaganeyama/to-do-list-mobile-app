@@ -39,8 +39,9 @@ export default function App() {
       </Stack.Navigator> */}
 
       {/*Temporally*/}
-      <InsideStack.Navigator>
-        <InsideStack.Screen name="my dotos" component={List} />
+      <InsideStack.Navigator initialRouteName="Login">
+        <InsideStack.Screen name="Login" component={Login} />
+        {/* <InsideStack.Screen name="my dotos" component={List} /> */}
       </InsideStack.Navigator>
       {/*Temporally*/}
     </NavigationContainer>
