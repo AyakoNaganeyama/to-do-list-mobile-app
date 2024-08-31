@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Entypo } from "@expo/vector-icons";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import useUserStore from "../store/authStore";
@@ -18,7 +17,7 @@ export interface Todo {
 }
 
 //todo list page
-const List = ({ navigation }: any) => {
+const List = () => {
   const [todos, setTodos] = useState<Todo[]>([]); // array of todo, initially empty
   const [todo, setTodo] = useState(""); // each todo
   const globalLogout = useUserStore((state) => state.clearUser); // logout function from zustand
