@@ -25,7 +25,11 @@ interface User {
 function InsideLayout() {
   return (
     <InsideStack.Navigator>
-      <InsideStack.Screen name="my dotos" component={List} />
+      <InsideStack.Screen
+        name="my dotos"
+        component={List}
+        options={{ headerShown: false }}
+      />
     </InsideStack.Navigator>
   );
 }
