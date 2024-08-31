@@ -1,12 +1,9 @@
 import { View, Text, Button, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Entypo } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import uuid from "react-native-uuid";
-import useUserStore from "../store/authStore";
 import useTodos from "../hooks/useTodos";
 import useLogout from "../hooks/useLogout";
 
@@ -22,9 +19,7 @@ export interface Todo {
 const List = () => {
   const { todos, addTodo, toggleDone, deleteTodo } = useTodos();
   const { logout } = useLogout();
-
   const [todo, setTodo] = useState(""); // each todo
-
   const handleAddTodo = () => {
     addTodo(todo, () => setTodo("")); // setTodo function is call back
   };
