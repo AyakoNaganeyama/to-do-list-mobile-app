@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 
 import useUserStore from "../store/authStore";
+import useToast from "../hooks/useToast";
 
 interface User {
   uid: string;
@@ -22,6 +23,7 @@ const Login = () => {
   const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false);
   const [isAccount, setisAccount] = useState(false);
+  const { showSuccessToast, showErrorToast } = useToast();
 
   const globalLogin = useUserStore((state) => state.setUser);
   const globalLogout = useUserStore((state) => state.clearUser);
@@ -53,6 +55,11 @@ const Login = () => {
 
       const passwordExists = users.some((user) => user.pass === password);
       if (passwordExists) {
+        showErrorToast(
+          "Sign Up Failed",
+          "This password is already in use. Please choose a different password."
+        );
+
         console.log(
           "Sign Up Failed",
           "This password is already in use. Please choose a different password."
@@ -70,6 +77,9 @@ const Login = () => {
       globalLogin(newUser);
 
       console.log("user added successfully:", newUser);
+
+      showSuccessToast("Signup Successful", `Hello, ${newUser.email}!`);
+
       const after = await AsyncStorage.getItem("users");
       console.log(after);
     } catch (err) {
@@ -96,6 +106,7 @@ const Login = () => {
 
           console.log("zustand", globalUser);
         } else {
+          showErrorToast("Login Failed", "Invalid email or password.");
           console.log("Login Failed", "Invalid email or password.");
         }
       }
@@ -124,9 +135,17 @@ const Login = () => {
           value={pass}
         />
 
-        <Button onPress={() => signUp(email, pass)} title="CreateAccount" />
+        <Button
+          onPress={() => signUp(email, pass)}
+          title="CreateAccount"
+          disabled={email === "" || pass === ""}
+        />
 
-        <Button onPress={() => login(email, pass)} title="Login" />
+        <Button
+          onPress={() => login(email, pass)}
+          title="Login"
+          disabled={email === "" || pass === ""}
+        />
       </View>
     </SafeAreaView>
   );

@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "./firebaseConfig";
 import useUserStore from "./app/store/authStore";
+import { toastConfig } from "./app/hooks/useToast";
+import Toast from "react-native-toast-message";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +56,9 @@ export default function App() {
           />
         )}
       </Stack.Navigator>
+
+      {/* Render the Toast component as the last child https://www.npmjs.com/package/react-native-toast-message*/}
+      <Toast config={toastConfig} />
     </NavigationContainer>
   );
 }
