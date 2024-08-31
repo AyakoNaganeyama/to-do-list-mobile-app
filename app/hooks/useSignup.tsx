@@ -1,42 +1,20 @@
-import { View, Text, TextInput, Button, SafeAreaView } from "react-native";
-import React from "react";
 import { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
-
 import useUserStore from "../store/authStore";
 import useToast from "../hooks/useToast";
-import useLogin from "../hooks/useLogin";
-import useLogout from "../hooks/useLogout";
 
+// Define the User type
 interface User {
   uid: string;
   email: string;
   pass: string;
 }
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+const useSignUp = () => {
   const [loading, setLoading] = useState(false);
-  const [isAccount, setisAccount] = useState(false);
   const { showSuccessToast, showErrorToast } = useToast();
-
   const globalLogin = useUserStore((state) => state.setUser);
-  const globalLogout = useUserStore((state) => state.clearUser);
-
-  const { login, loading: loginLoading } = useLogin();
-  const { logout } = useLogout();
-
-  // Access the user state from Zustand store
-  const globalUser = useUserStore((state) => state.user);
-
-  // const auth = fireAuth;
 
   const signUp = async (email: string, password: string) => {
     setLoading(true);
@@ -88,40 +66,14 @@ const Login = () => {
       const after = await AsyncStorage.getItem("users");
       console.log(after);
     } catch (err) {
-      console.log(err);
+      console.error("Error during sign up:", err);
+      showErrorToast("Sign Up Error", "An error occurred during sign up.");
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View>
-        <TextInput
-          placeholder="enter email"
-          onChangeText={(text: string) => setEmail(text)}
-          value={email}
-        />
-        <TextInput
-          placeholder="enter pass"
-          onChangeText={(text: string) => setPass(text)}
-          value={pass}
-        />
-
-        <Button
-          onPress={() => signUp(email, pass)}
-          title="CreateAccount"
-          disabled={email === "" || pass === ""}
-        />
-
-        <Button
-          onPress={() => login(email, pass)}
-          title="Login"
-          disabled={email === "" || pass === ""}
-        />
-      </View>
-    </SafeAreaView>
-  );
+  return { signUp, loading };
 };
 
-export default Login;
+export default useSignUp;
