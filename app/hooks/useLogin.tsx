@@ -56,7 +56,7 @@ const useLogin = () => {
     }
   };
 
-  return { login, loading };
+  return { login };
 };
 
 export default useLogin;

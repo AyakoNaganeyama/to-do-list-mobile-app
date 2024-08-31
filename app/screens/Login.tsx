@@ -1,18 +1,9 @@
 import { View, Text, TextInput, Button, SafeAreaView } from "react-native";
 import React from "react";
 import { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import uuid from "react-native-uuid";
-
 import useUserStore from "../store/authStore";
-import useToast from "../hooks/useToast";
 import useLogin from "../hooks/useLogin";
-import useLogout from "../hooks/useLogout";
+import useSignUp from "../hooks/useSignup";
 
 interface User {
   uid: string;
@@ -23,76 +14,11 @@ interface User {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isAccount, setisAccount] = useState(false);
-  const { showSuccessToast, showErrorToast } = useToast();
-
-  const globalLogin = useUserStore((state) => state.setUser);
-  const globalLogout = useUserStore((state) => state.clearUser);
-
-  const { login, loading: loginLoading } = useLogin();
-  const { logout } = useLogout();
+  const { login } = useLogin(); //return login logic from the hook
+  const { signUp } = useSignUp(); //return sign up logic from the hook
 
   // Access the user state from Zustand store
   const globalUser = useUserStore((state) => state.user);
-
-  // const auth = fireAuth;
-
-  const signUp = async (email: string, password: string) => {
-    setLoading(true);
-    const newUser: User = {
-      uid: uuid.v4() as string,
-      email: email,
-      pass: password,
-    };
-
-    try {
-      // Retrieve the existing todos list from AsyncStorage
-      const jsonValue = await AsyncStorage.getItem("users");
-
-      let users: User[];
-
-      if (jsonValue != null) {
-        users = JSON.parse(jsonValue);
-      } else {
-        users = [];
-      }
-
-      const passwordExists = users.some((user) => user.pass === password);
-      if (passwordExists) {
-        showErrorToast(
-          "Sign Up Failed",
-          "This password is already in use. Please choose a different password."
-        );
-
-        console.log(
-          "Sign Up Failed",
-          "This password is already in use. Please choose a different password."
-        );
-        return;
-      }
-
-      // Add the new Todo to the existing list (or to the empty array)
-
-      users.push(newUser);
-
-      // Save the updated list back to AsyncStorage
-      const updatedJsonValue = JSON.stringify(users);
-      await AsyncStorage.setItem("users", updatedJsonValue);
-      globalLogin(newUser);
-
-      console.log("user added successfully:", newUser);
-
-      showSuccessToast("Signup Successful", `Hello, ${newUser.email}!`);
-
-      const after = await AsyncStorage.getItem("users");
-      console.log(after);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

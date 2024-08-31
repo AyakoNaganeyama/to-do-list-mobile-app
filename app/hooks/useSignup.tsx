@@ -76,7 +76,7 @@ const useSignUp = () => {
     }
   };
 
-  return { signUp, loading };
+  return { signUp };
 };
 
 export default useSignUp;
