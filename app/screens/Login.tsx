@@ -22,16 +22,18 @@ const Login = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View>
+      <View style={{ marginTop: 30 }}>
         <TextInput
           placeholder="enter email"
           onChangeText={(text: string) => setEmail(text)}
           value={email}
+          style={{ height: 50, borderWidth: 2 }}
         />
         <TextInput
           placeholder="enter pass"
           onChangeText={(text: string) => setPass(text)}
           value={pass}
+          style={{ height: 50, borderWidth: 2 }}
         />
 
         <Button
