@@ -20,21 +20,25 @@ const useLogin = () => {
     setLoading(true);
 
     try {
-      const jsonValue = await AsyncStorage.getItem("users");
+      const jsonValue = await AsyncStorage.getItem("users"); // get user data from async storage
       if (jsonValue !== null) {
-        const users: User[] = JSON.parse(jsonValue);
+        const users: User[] = JSON.parse(jsonValue); //covert json string into array of user objects
         // Find the user that matches both email and password
         const foundUser = users.find(
           (user) => user.email === email && user.pass === password
         );
 
         if (foundUser) {
+          //if fount show success toast
           showSuccessToast(
             "Login Successful",
             `Welcome back, ${foundUser.email}!`
           );
+
+          //set found user in zustand for global access
           globalLogin(foundUser);
 
+          //this is for testing
           console.log("zustand", globalUser);
         } else {
           showErrorToast("Login Failed", "Invalid email or password.");

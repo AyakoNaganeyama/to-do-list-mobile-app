@@ -36,8 +36,10 @@ const useSignUp = () => {
         users = [];
       }
 
+      // check if entered password already exists
       const passwordExists = users.some((user) => user.pass === password);
       if (passwordExists) {
+        //if password already exists in database show error toast
         showErrorToast(
           "Sign Up Failed",
           "This password is already in use. Please choose a different password."
@@ -63,6 +65,7 @@ const useSignUp = () => {
 
       showSuccessToast("Signup Successful", `Hello, ${newUser.email}!`);
 
+      //This is for testing to see who is in database after adding the new user
       const after = await AsyncStorage.getItem("users");
       console.log(after);
     } catch (err) {

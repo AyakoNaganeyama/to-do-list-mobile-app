@@ -6,6 +6,7 @@ const useLogout = () => {
   const { showSuccessToast } = useToast();
 
   const logout = () => {
+    //set zustand use to null
     globalLogout();
     showSuccessToast("Logout Successful", "You have been logged out.");
   };
