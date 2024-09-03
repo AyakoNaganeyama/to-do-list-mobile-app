@@ -1,4 +1,12 @@
-import { View, Text, TextInput, Button, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { useState } from "react";
 import useUserStore from "../store/authStore";
@@ -21,35 +29,108 @@ const Login = () => {
   const globalUser = useUserStore((state) => state.user);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ marginTop: 30 }}>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
         <TextInput
           placeholder="enter email"
           onChangeText={(text: string) => setEmail(text)}
           value={email}
-          style={{ height: 50, borderWidth: 2 }}
+          style={styles.input}
+          placeholderTextColor={"gray"}
         />
         <TextInput
-          placeholder="enter pass"
+          placeholder="enter password"
           onChangeText={(text: string) => setPass(text)}
           value={pass}
-          style={{ height: 50, borderWidth: 2 }}
+          style={styles.input}
+          placeholderTextColor={"gray"}
         />
+        <View style={{ marginBottom: 20 }} />
 
-        <Button
+        <TouchableOpacity
+          onPress={() => signUp(email, pass)}
+          disabled={email === "" || pass === ""}
+        ></TouchableOpacity>
+
+        {/* <Button
           onPress={() => signUp(email, pass)}
           title="CreateAccount"
           disabled={email === "" || pass === ""}
-        />
+        /> */}
 
-        <Button
+        <TouchableOpacity
+          onPress={() => signUp(email, pass)}
+          disabled={email === "" || pass === ""}
+          style={[
+            styles.Button,
+            (email === "" || pass === "") && styles.buttonDisabled, // Apply disabled style conditionally
+          ]}
+        >
+          <Text style={styles.buttonText}>Create Account</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => login(email, pass)}
+          disabled={email === "" || pass === ""}
+          style={[
+            styles.Button,
+            (email === "" || pass === "") && styles.buttonDisabled, // Apply disabled style conditionally
+          ]}
+        >
+          <Text style={styles.buttonText}>Log in</Text>
+        </TouchableOpacity>
+
+        {/* <Button
           onPress={() => login(email, pass)}
           title="Login"
           disabled={email === "" || pass === ""}
-        />
+        /> */}
       </View>
     </SafeAreaView>
   );
 };
 
 export default Login;
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#080404",
+  },
+  container: {
+    width: "80%",
+    paddingHorizontal: 10,
+  },
+  input: {
+    borderRadius: 10,
+    height: 50,
+    borderWidth: 2,
+    width: "100%",
+    marginBottom: 10,
+    padding: 5,
+    borderColor: "#6c7cac",
+    backgroundColor: "#3f4145",
+    color: "#fff",
+  },
+
+  Button: {
+    backgroundColor: "#6c7cac",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    marginHorizontal: 30,
+  },
+  buttonDisabled: {
+    backgroundColor: "#8e979e",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});
