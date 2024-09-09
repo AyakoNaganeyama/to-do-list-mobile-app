@@ -14,6 +14,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Entypo } from "@expo/vector-icons";
 import useTodos from "../hooks/useTodos";
 import useLogout from "../hooks/useLogout";
+import Details from "./Details";
 
 // todo class
 export interface Todo {
@@ -31,6 +32,18 @@ const List = () => {
   const handleAddTodo = () => {
     addTodo(todo, () => setTodo("")); // setTodo function is call back
   };
+  const handleOpenModal = (todo: Todo) => {
+    setSelectedTodo(todo);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedTodo(null);
+  };
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,9 +92,11 @@ const List = () => {
                       ) : (
                         <Entypo name="circle" size={24} color="#6c7cac" />
                       )}
-                      <Text style={{ color: "white", fontSize: 16 }}>
-                        {item.title}
-                      </Text>
+                      <TouchableOpacity onPress={() => handleOpenModal(item)}>
+                        <Text style={{ color: "white", fontSize: 16 }}>
+                          {item.title} {item.id}
+                        </Text>
+                      </TouchableOpacity>
                     </TouchableOpacity>
                     <Ionicons
                       name="trash-bin-outline"
@@ -101,6 +116,13 @@ const List = () => {
           <Button onPress={logout} title="Logout" />
         </View>
       </View>
+      {selectedTodo && (
+        <Details
+          visible={modalVisible}
+          onClose={handleCloseModal}
+          todo={selectedTodo}
+        />
+      )}
     </SafeAreaView>
   );
 };

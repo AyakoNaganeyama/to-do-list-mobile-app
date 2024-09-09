@@ -39,7 +39,7 @@ const useTodos = () => {
 
     // calling the function everytime the page loads
     getTodos();
-  }, []);
+  }, [todos]);
 
   //TODO: This add function should be in hooks
   const addTodo = async (title: string, clearInput: () => void) => {
@@ -159,11 +159,35 @@ const useTodos = () => {
     }
   };
 
+  const updateTodo = async (updatedTodo: Todo) => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("todos");
+      let todos: Todo[] = jsonValue ? JSON.parse(jsonValue) : [];
+
+      // Find and update the specific todo
+      const index = todos.findIndex((todo) => todo.id === updatedTodo.id);
+      if (index !== -1) {
+        todos[index] = updatedTodo; // Update the todo in the array
+        await AsyncStorage.setItem("todos", JSON.stringify(todos)); // Save to AsyncStorage
+
+        const userTodos = todos.filter((todo) => todo.uid === globalUser?.uid);
+        setTodos(userTodos); // Update the state with the new todos list
+        console.log(userTodos);
+        console.log(todos);
+      } else {
+        console.log(`Todo not found.`);
+      }
+    } catch (e) {
+      console.error("Error updating todo:", e);
+    }
+  };
+
   return {
     todos,
     addTodo,
     toggleDone,
     deleteTodo,
+    updateTodo,
   };
 };
 
