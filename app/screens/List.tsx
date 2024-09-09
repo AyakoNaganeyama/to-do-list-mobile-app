@@ -28,10 +28,15 @@ export interface Todo {
 const List = () => {
 	const { todos, addTodo, toggleDone, deleteTodo } = useTodos()
 	const { logout } = useLogout()
+
 	const [todo, setTodo] = useState('') // each todo
+	const [modalVisible, setModalVisible] = useState(false)
+	const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null)
+
 	const handleAddTodo = () => {
 		addTodo(todo, () => setTodo('')) // setTodo function is call back
 	}
+
 	const handleOpenModal = (todo: Todo) => {
 		setSelectedTodo(todo)
 		setModalVisible(true)
@@ -41,9 +46,6 @@ const List = () => {
 		setModalVisible(false)
 		setSelectedTodo(null)
 	}
-
-	const [modalVisible, setModalVisible] = useState(false)
-	const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null)
 
 	return (
 		<SafeAreaView style={styles.container}>
