@@ -8,24 +8,14 @@ import {
 } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
-import useUserStore from '../store/authStore'
 import useLogin from '../hooks/useLogin'
 import useSignUp from '../hooks/useSignup'
-
-interface User {
-	uid: string
-	email: string
-	pass: string
-}
 
 const Login = () => {
 	const [email, setEmail] = useState('')
 	const [pass, setPass] = useState('')
 	const { login } = useLogin() //return login logic from the hook
 	const { signUp } = useSignUp() //return sign up logic from the hook
-
-	// Access the user state from Zustand store
-	const globalUser = useUserStore((state) => state.user)
 
 	return (
 		<SafeAreaView style={styles.safeArea}>
