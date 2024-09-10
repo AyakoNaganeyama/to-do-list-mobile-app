@@ -1,7 +1,8 @@
-import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useState } from 'react'
+
 import useUserStore from '../store/authStore'
-import useToast from '../hooks/useToast'
+import { useToast } from '../hooks/useToast'
 
 // Define the User type
 interface User {
@@ -10,13 +11,14 @@ interface User {
 	pass: string
 }
 
-const useLogin = () => {
+export function useLogin() {
 	const [loading, setLoading] = useState(false)
 	const { showSuccessToast, showErrorToast } = useToast()
+
 	const globalLogin = useUserStore((state) => state.setUser)
 	const globalUser = useUserStore((state) => state.user)
 
-	const login = async (email: string, password: string) => {
+	async function login(email: string, password: string) {
 		setLoading(true)
 
 		try {
@@ -58,5 +60,3 @@ const useLogin = () => {
 
 	return { login }
 }
-
-export default useLogin
