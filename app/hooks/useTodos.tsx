@@ -1,8 +1,4 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
-import { StyleSheet } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
-import { Entypo } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid'
 import useUserStore from '../store/authStore'
@@ -15,14 +11,14 @@ const useTodos = () => {
 
 	// Fetch todos when the hook is used
 	useEffect(() => {
-		//everytime this page loads, get list of dotos from database that matches user's id
+		//every time this page loads, get list of todos from database that matches user's id
 		const getTodos = async () => {
 			try {
 				const jsonValue = await AsyncStorage.getItem('todos') // Fetch todos from AsyncStorage
 				if (jsonValue != null) {
 					//covert json string into todo object
 					const objects = JSON.parse(jsonValue)
-					//filter todo that maches currently logged in user
+					//filter todo that matches currently logged in user
 					const userTodos = objects.filter(
 						(todo: Todo) => todo.uid === globalUser?.uid
 					)
@@ -37,7 +33,7 @@ const useTodos = () => {
 			}
 		}
 
-		// calling the function everytime the page loads
+		// calling the function every time the page loads
 		getTodos()
 	}, [todos])
 
@@ -64,7 +60,6 @@ const useTodos = () => {
 			}
 
 			// Add the new Todo to the existing list (or to the empty array)
-
 			todos.push(newTodo)
 
 			//back object array to json string
