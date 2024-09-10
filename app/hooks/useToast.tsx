@@ -1,5 +1,4 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message'
 
 // Custom toast configuration
@@ -32,8 +31,8 @@ const toastConfig = {
 }
 
 // Hook to use Toast with custom configurations
-const useToast = () => {
-	const showSuccessToast = (text1: string, text2: string) => {
+function useToast() {
+	function showSuccessToast(text1: string, text2: string) {
 		Toast.show({
 			type: 'success',
 			text1,
@@ -41,7 +40,7 @@ const useToast = () => {
 		})
 	}
 
-	const showErrorToast = (text1: string, text2: string) => {
+	function showErrorToast(text1: string, text2: string) {
 		Toast.show({
 			type: 'error',
 			text1,
@@ -52,5 +51,4 @@ const useToast = () => {
 	return { showSuccessToast, showErrorToast }
 }
 
-export { toastConfig }
-export default useToast
+export { toastConfig, useToast }

@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import uuid from 'react-native-uuid'
-import useUserStore from '../store/authStore'
+import { useEffect, useState } from 'react'
 
+import useUserStore from '../store/authStore'
 import { Todo } from '../screens/List'
 
-const useTodos = () => {
+export function useTodos() {
 	const [todos, setTodos] = useState<Todo[]>([]) // State to hold todos
 	const globalUser = useUserStore((state) => state.user) // Access the global user from Zustand
 
 	// Fetch todos when the hook is used
 	useEffect(() => {
 		//every time this page loads, get list of todos from database that matches user's id
-		const getTodos = async () => {
+		async function getTodos() {
 			try {
 				const jsonValue = await AsyncStorage.getItem('todos') // Fetch todos from AsyncStorage
 				if (jsonValue != null) {
@@ -38,7 +38,7 @@ const useTodos = () => {
 	}, [todos])
 
 	//TODO: This add function should be in hooks
-	const addTodo = async (title: string, clearInput: () => void) => {
+	async function addTodo(title: string, clearInput: () => void) {
 		//create a new todo object
 		const newTodo: Todo = {
 			title: title,
@@ -82,7 +82,7 @@ const useTodos = () => {
 	}
 
 	//TODO: this function should be in hooks
-	const toggleDone = async (id: string) => {
+	async function toggleDone(id: string) {
 		try {
 			//Retrieve the existing todos list from AsyncStorage
 			const jsonValue = await AsyncStorage.getItem('todos')
@@ -120,7 +120,7 @@ const useTodos = () => {
 		}
 	}
 
-	const deleteTodo = async (id: string) => {
+	async function deleteTodo(id: string) {
 		try {
 			// Retrieve the existing todos list from AsyncStorage
 			const jsonValue = await AsyncStorage.getItem('todos')
@@ -154,7 +154,7 @@ const useTodos = () => {
 		}
 	}
 
-	const updateTodo = async (updatedTodo: Todo) => {
+	async function updateTodo(updatedTodo: Todo) {
 		try {
 			const jsonValue = await AsyncStorage.getItem('todos')
 			let todos: Todo[] = jsonValue ? JSON.parse(jsonValue) : []
@@ -185,5 +185,3 @@ const useTodos = () => {
 		updateTodo,
 	}
 }
-
-export default useTodos

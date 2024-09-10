@@ -1,11 +1,11 @@
 import useUserStore from '../store/authStore'
-import useToast from '../hooks/useToast'
+import { useToast } from '../hooks/useToast'
 
-const useLogout = () => {
+export function useLogout() {
 	const globalLogout = useUserStore((state) => state.clearUser)
 	const { showSuccessToast } = useToast()
 
-	const logout = () => {
+	function logout() {
 		//set zustand use to null
 		globalLogout()
 		showSuccessToast('Logout Successful', 'You have been logged out.')
@@ -13,5 +13,3 @@ const useLogout = () => {
 
 	return { logout }
 }
-
-export default useLogout
