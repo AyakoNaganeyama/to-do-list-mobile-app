@@ -1,19 +1,21 @@
+import React from 'react'
 import {
-	View,
-	Text,
-	TextInput,
 	SafeAreaView,
 	StyleSheet,
+	Text,
+	TextInput,
 	TouchableOpacity,
+	View,
 } from 'react-native'
-import React from 'react'
 import { useState } from 'react'
-import useLogin from '../hooks/useLogin'
-import useSignUp from '../hooks/useSignup'
 
-const Login = () => {
+import { useLogin } from '../hooks/useLogin'
+import { useSignUp } from '../hooks/useSignup'
+
+export function Login() {
 	const [email, setEmail] = useState('')
 	const [pass, setPass] = useState('')
+
 	const { login } = useLogin() //return login logic from the hook
 	const { signUp } = useSignUp() //return sign up logic from the hook
 
@@ -67,40 +69,37 @@ const Login = () => {
 	)
 }
 
-export default Login
-
 const styles = StyleSheet.create({
 	safeArea: {
-		flex: 1,
-		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: '#080404',
+		flex: 1,
+		justifyContent: 'center',
 	},
 	container: {
-		width: '80%',
 		paddingHorizontal: 10,
+		width: '80%',
 	},
 	input: {
+		backgroundColor: '#3f4145',
+		borderColor: '#6c7cac',
 		borderRadius: 10,
-		height: 50,
 		borderWidth: 2,
-		width: '100%',
+		color: '#fff',
+		height: 50,
 		marginBottom: 10,
 		padding: 5,
-		borderColor: '#6c7cac',
-		backgroundColor: '#3f4145',
-		color: '#fff',
+		width: '100%',
 	},
-
 	Button: {
-		backgroundColor: '#6c7cac',
-		paddingVertical: 10,
-		paddingHorizontal: 20,
-		borderRadius: 10,
 		alignItems: 'center',
+		backgroundColor: '#6c7cac',
+		borderRadius: 10,
 		justifyContent: 'center',
 		marginBottom: 10,
 		marginHorizontal: 30,
+		paddingHorizontal: 20,
+		paddingVertical: 10,
 	},
 	buttonDisabled: {
 		backgroundColor: '#8e979e',

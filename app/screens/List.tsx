@@ -1,20 +1,21 @@
+import React from 'react'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import {
-	View,
-	Text,
 	Button,
+	SafeAreaView,
+	ScrollView,
+	Text,
 	TextInput,
 	TouchableOpacity,
-	ScrollView,
-	SafeAreaView,
+	View,
 } from 'react-native'
-import React from 'react'
-import { useState } from 'react'
-import { StyleSheet } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
 import { Entypo } from '@expo/vector-icons'
-import useTodos from '../hooks/useTodos'
-import useLogout from '../hooks/useLogout'
-import Details from './Details'
+import { StyleSheet } from 'react-native'
+import { useState } from 'react'
+
+import { Details } from './Details'
+import { useLogout } from '../hooks/useLogout'
+import { useTodos } from '../hooks/useTodos'
 
 // todo class
 export interface Todo {
@@ -25,24 +26,24 @@ export interface Todo {
 }
 
 //todo list page
-const List = () => {
-	const { todos, addTodo, toggleDone, deleteTodo } = useTodos()
-	const { logout } = useLogout()
-
+export function List() {
 	const [todo, setTodo] = useState('') // each todo
 	const [modalVisible, setModalVisible] = useState(false)
 	const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null)
 
-	const handleAddTodo = () => {
+	const { todos, addTodo, toggleDone, deleteTodo } = useTodos()
+	const { logout } = useLogout()
+
+	function handleAddTodo() {
 		addTodo(todo, () => setTodo('')) // setTodo function is call back
 	}
 
-	const handleOpenModal = (todo: Todo) => {
+	function handleOpenModal(todo: Todo) {
 		setSelectedTodo(todo)
 		setModalVisible(true)
 	}
 
-	const handleCloseModal = () => {
+	function handleCloseModal() {
 		setModalVisible(false)
 		setSelectedTodo(null)
 	}
@@ -128,8 +129,6 @@ const List = () => {
 		</SafeAreaView>
 	)
 }
-
-export default List
 
 const styles = StyleSheet.create({
 	container: {

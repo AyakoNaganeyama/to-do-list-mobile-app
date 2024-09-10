@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import {
-	View,
-	Text,
 	Modal,
+	StyleSheet,
+	Text,
 	TextInput,
 	TouchableOpacity,
-	StyleSheet,
+	View,
 } from 'react-native'
 import { Todo } from './List'
-import useTodos from '../hooks/useTodos'
+import { useTodos } from '../hooks/useTodos'
 
 interface DetailsProps {
 	visible: boolean
@@ -16,7 +16,7 @@ interface DetailsProps {
 	todo: Todo | null
 }
 
-const Details: React.FC<DetailsProps> = ({ visible, onClose, todo }) => {
+export function Details({ visible, onClose, todo }: DetailsProps) {
 	const { updateTodo } = useTodos() // Access updateTodo from the hook
 	const [editTitle, setEditTitle] = useState(todo?.title || '')
 
@@ -28,7 +28,7 @@ const Details: React.FC<DetailsProps> = ({ visible, onClose, todo }) => {
 	}, [todo])
 
 	// Handle saving changes
-	const handleSave = () => {
+	function handleSave() {
 		if (todo) {
 			const updatedTodo = { ...todo, title: editTitle } // Create an updated todo
 			updateTodo(updatedTodo) // Call updateTodo from the hook to update in AsyncStorage
@@ -65,8 +65,6 @@ const Details: React.FC<DetailsProps> = ({ visible, onClose, todo }) => {
 		</Modal>
 	)
 }
-
-export default Details
 
 const styles = StyleSheet.create({
 	centeredView: {

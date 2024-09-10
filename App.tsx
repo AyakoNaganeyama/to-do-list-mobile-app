@@ -1,33 +1,22 @@
+import Toast from 'react-native-toast-message'
 import { createNativeStackNavigator } from '@react-navigation/native-stack' //https://reactnavigation.org/docs/hello-react-navigation
 import { NavigationContainer } from '@react-navigation/native'
-import List from './app/screens/List'
-import Login from './app/screens/Login'
-
 import { useState, useEffect } from 'react'
-import useUserStore from './app/store/authStore'
+
+import { List } from './app/screens/List'
+import { Login } from './app/screens/Login'
+
 import { toastConfig } from './app/hooks/useToast'
-import Toast from 'react-native-toast-message'
+import useUserStore from './app/store/authStore'
 
 const Stack = createNativeStackNavigator()
 
-const InsideStack = createNativeStackNavigator()
 interface User {
 	uid: string // Unique identifier for the user
 	email: string // Email address of the user
 	pass: string // Password of the user
 }
 
-function InsideLayout() {
-	return (
-		<InsideStack.Navigator>
-			<InsideStack.Screen
-				name='my dotos'
-				component={List}
-				options={{ headerShown: false }}
-			/>
-		</InsideStack.Navigator>
-	)
-}
 export default function App() {
 	const [user, setUser] = useState<User | null>(null)
 	const globalUser = useUserStore((state) => state.user)
@@ -43,8 +32,8 @@ export default function App() {
 			<Stack.Navigator initialRouteName='Login'>
 				{user ? (
 					<Stack.Screen
-						name='Inside'
-						component={InsideLayout}
+						name='My todos'
+						component={List}
 						options={{ headerShown: false }}
 					/>
 				) : (
