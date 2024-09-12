@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { List } from './app/screens/List'
 import { Login } from './app/screens/Login'
 
-import { toastConfig } from './app/hooks/useToast'
+import { toastConfig, useToast } from './app/hooks/useToast'
 import useUserStore from './app/store/authStore'
 
 const Stack = createNativeStackNavigator()
@@ -21,8 +21,14 @@ export default function App() {
 	const [user, setUser] = useState<User | null>(null)
 	const globalUser = useUserStore((state) => state.user)
 
+	const { showSuccessToast, showErrorToast } = useToast()
+
 	useEffect(() => {
 		setUser(globalUser)
+		if (globalUser)
+			showSuccessToast('Login Successful', `Welcome back, ${globalUser.email}!`)
+		else showErrorToast('Login Failed', 'Invalid email or password.')
+
 		console.log('App.js Zustand', globalUser)
 	}, [globalUser])
 
