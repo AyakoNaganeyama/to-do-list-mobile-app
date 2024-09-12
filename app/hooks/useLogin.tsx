@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react'
 
 import useUserStore from '../store/authStore'
 import { useToast } from '../hooks/useToast'
@@ -12,15 +11,12 @@ interface User {
 }
 
 export function useLogin() {
-	const [loading, setLoading] = useState(false)
 	const { showSuccessToast, showErrorToast } = useToast()
 
 	const globalLogin = useUserStore((state) => state.setUser)
 	const globalUser = useUserStore((state) => state.user)
 
 	async function login(email: string, password: string) {
-		setLoading(true)
-
 		try {
 			const jsonValue = await AsyncStorage.getItem('users') // get user data from async storage
 			if (jsonValue !== null) {
@@ -53,8 +49,6 @@ export function useLogin() {
 				'Login Error',
 				'An error occurred during login. Please try again.'
 			)
-		} finally {
-			setLoading(false)
 		}
 	}
 
