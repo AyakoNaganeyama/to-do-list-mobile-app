@@ -21,15 +21,8 @@ export default function App() {
 	const [user, setUser] = useState<User | null>(null)
 	const globalUser = useUserStore((state) => state.user)
 
-	const { showSuccessToast, showErrorToast } = useToast()
-
 	useEffect(() => {
 		setUser(globalUser)
-		if (globalUser)
-			showSuccessToast('Login Successful', `Welcome back, ${globalUser.email}!`)
-		else showErrorToast('Login Failed', 'Invalid email or password.')
-
-		console.log('App.js Zustand', globalUser)
 	}, [globalUser])
 
 	//Using Stack navigator
