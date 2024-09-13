@@ -39,9 +39,14 @@ describe('useLogin Hook', () => {
 		const { result } = renderHook(() => useLogin())
 		const { login } = result.current
 
-		// attempt to sign user in, if not successful test will fail
+		let loggedInUser
+
+		// attempt to log in, will return user if login was succesful else it will return null
 		await act(async () => {
-			await login('test@example.com', 'password123')
+			loggedInUser = await login('test@example.com', 'password123')
 		})
+
+		// assert that user was logged
+		expect(loggedInUser).toEqual(mockUser)
 	})
 })
