@@ -11,6 +11,7 @@ import { useState } from 'react'
 
 import { useLogin } from '../hooks/useLogin'
 import { useSignUp } from '../hooks/useSignup'
+import { useToast } from '../hooks/useToast'
 
 export function Login() {
 	const [email, setEmail] = useState('')
@@ -18,6 +19,19 @@ export function Login() {
 
 	const { login } = useLogin() //return login logic from the hook
 	const { signUp } = useSignUp() //return sign up logic from the hook
+
+	const { showSuccessToast, showErrorToast } = useToast()
+
+	async function handleLogin() {
+		const loggedInUser = await login(email, pass)
+
+		if (loggedInUser)
+			showSuccessToast(
+				'Login Successful',
+				`Welcome back, ${loggedInUser.email}!`
+			)
+		else showErrorToast('Login Failed', 'Invalid email or password.')
+	}
 
 	return (
 		<SafeAreaView style={styles.safeArea}>
@@ -55,7 +69,7 @@ export function Login() {
 				</TouchableOpacity>
 
 				<TouchableOpacity
-					onPress={() => login(email, pass)}
+					onPress={handleLogin}
 					disabled={email === '' || pass === ''}
 					style={[
 						styles.Button,
