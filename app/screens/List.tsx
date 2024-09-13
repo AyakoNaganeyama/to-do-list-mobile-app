@@ -16,6 +16,7 @@ import { useState } from 'react'
 import { Details } from './Details'
 import { useLogout } from '../hooks/useLogout'
 import { useTodos } from '../hooks/useTodos'
+import { useToast } from '../hooks/useToast'
 
 // todo class
 export interface Todo {
@@ -33,6 +34,7 @@ export function List() {
 
 	const { todos, addTodo, toggleDone, deleteTodo } = useTodos()
 	const { logout } = useLogout()
+	const { showSuccessToast } = useToast()
 
 	function handleAddTodo() {
 		addTodo(todo, () => setTodo('')) // setTodo function is call back
@@ -46,6 +48,11 @@ export function List() {
 	function handleCloseModal() {
 		setModalVisible(false)
 		setSelectedTodo(null)
+	}
+
+	function handleLogout() {
+		logout()
+		showSuccessToast('Logout Successful', 'You have been logged out.')
 	}
 
 	return (
@@ -116,7 +123,7 @@ export function List() {
 
 				{/* Fixed Logout Button at the Bottom */}
 				<View style={styles.logoutButtonContainer}>
-					<Button onPress={logout} title='Logout' />
+					<Button onPress={handleLogout} title='Logout' />
 				</View>
 			</View>
 			{selectedTodo && (
