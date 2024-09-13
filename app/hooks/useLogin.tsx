@@ -27,8 +27,10 @@ export function useLogin() {
 			if (foundUser) {
 				//set found user in zustand for global access
 				globalLogin(foundUser)
+				return foundUser
 			} else {
 				console.log('Login Failed', 'Invalid email or password.')
+				return null
 			}
 		}
 	}
