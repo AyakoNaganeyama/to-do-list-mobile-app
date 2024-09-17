@@ -1,11 +1,19 @@
 import useUserStore from '../store/authStore'
 
 export function useLogout() {
-	const globalLogout = useUserStore((state) => state.clearUser)
+	const { clearUser, setUser, user } = useUserStore(
+		({ clearUser, setUser, user }) => ({
+			clearUser,
+			setUser,
+			user,
+		})
+	)
 
 	function logout() {
 		//set zustand use to null
-		globalLogout()
+		clearUser()
+
+		return user
 	}
 
 	return { logout }
