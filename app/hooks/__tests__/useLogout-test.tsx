@@ -40,7 +40,6 @@ describe('useLogout Hook', () => {
 			logout()
 		})
 
-		console.log('mockUser', mockUser)
 		expect(mockUser).toBe(null) // check user is actually cleared
 	})
 })
