@@ -41,7 +41,7 @@ describe('useLogin Hook', () => {
 
 		let loggedInUser
 
-		// attempt to log in, will return user if login was succesful else it will return null
+		// attempt to log in, will return user if login was success else it will return null
 		await act(async () => {
 			loggedInUser = await login('test@example.com', 'password123')
 		})
