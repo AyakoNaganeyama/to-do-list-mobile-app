@@ -48,7 +48,6 @@ export function Details({ visible, onClose, todo }: DetailsProps) {
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
 					<Text style={styles.modalText}>Edit Todo</Text>
-					<Text>{todo.id}</Text>
 					<TextInput
 						style={styles.input}
 						value={editTitle}
