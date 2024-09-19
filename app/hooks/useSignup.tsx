@@ -38,19 +38,13 @@ export function useSignUp() {
 				users = []
 			}
 
+			//TODO: REMOVE THIS. CHANGE TO EMAIL ALREADY EXIST
 			// check if entered password already exists
-			const passwordExists = users.some((user) => user.pass === password)
-			if (passwordExists) {
+			const emailExist = users.some((user) => user.email === email)
+			if (emailExist) {
 				//if password already exists in database show error toast
-				showErrorToast(
-					'Sign Up Failed',
-					'This password is already in use. Please choose a different password.'
-				)
+				showErrorToast('Sign Up Failed', 'Email already register.')
 
-				console.log(
-					'Sign Up Failed',
-					'This password is already in use. Please choose a different password.'
-				)
 				return
 			}
 
