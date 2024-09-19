@@ -104,7 +104,7 @@ export function List() {
 											)}
 											<TouchableOpacity onPress={() => handleOpenModal(item)}>
 												<Text style={{ color: 'white', fontSize: 16 }}>
-													{item.title} {item.id}
+													{item.title}
 												</Text>
 											</TouchableOpacity>
 										</TouchableOpacity>
