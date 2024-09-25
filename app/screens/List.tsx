@@ -8,6 +8,8 @@ import {
 	TextInput,
 	TouchableOpacity,
 	View,
+	TouchableWithoutFeedback,
+	Keyboard,
 } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
@@ -56,84 +58,89 @@ export function List() {
 	}
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<View style={{ flex: 1, justifyContent: 'space-between' }}>
-				{/*todos*/}
-				<ScrollView style={{ flex: 1 }}>
-					<View style={styles.todos}>
-						<View style={styles.inputHead}>
-							<TextInput
-								placeholder='Add new todo'
-								onChangeText={(text) => setTodo(text)}
-								value={todo}
-								placeholderTextColor='gray'
-								style={styles.input}
-							/>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<SafeAreaView style={styles.container}>
+				<View style={{ flex: 1, justifyContent: 'space-between' }}>
+					{/*todos*/}
+					<ScrollView style={{ flex: 1 }}>
+						<View style={styles.todos}>
+							<View style={styles.inputHead}>
+								<TextInput
+									placeholder='Add new todo'
+									onChangeText={(text) => setTodo(text)}
+									value={todo}
+									placeholderTextColor='gray'
+									style={styles.input}
+								/>
 
-							<TouchableOpacity
-								onPress={handleAddTodo}
-								disabled={todo === ''}
-								style={[styles.AddButton, todo === '' && styles.buttonDisabled]}
-							>
-								<Text style={styles.buttonText}>+Add</Text>
-							</TouchableOpacity>
-						</View>
-
-						{/* Render the todos list using .map */}
-						{todos.length > 0 && (
-							<View>
-								{todos.map((item) => (
-									<View key={item.id} style={styles.todoItem}>
-										<TouchableOpacity
-											onPress={() => toggleDone(item.id)}
-											style={{
-												flexDirection: 'row',
-
-												alignItems: 'center',
-												gap: 10,
-											}}
-										>
-											{!item.done ? (
-												<Ionicons
-													name='checkmark-circle'
-													size={24}
-													color='#6c7cac'
-												/>
-											) : (
-												<Entypo name='circle' size={24} color='#6c7cac' />
-											)}
-											<TouchableOpacity onPress={() => handleOpenModal(item)}>
-												<Text style={{ color: 'white', fontSize: 16 }}>
-													{item.title}
-												</Text>
-											</TouchableOpacity>
-										</TouchableOpacity>
-										<Ionicons
-											name='trash-bin-outline'
-											size={24}
-											color='red'
-											onPress={() => deleteTodo(item.id)}
-										/>
-									</View>
-								))}
+								<TouchableOpacity
+									onPress={handleAddTodo}
+									disabled={todo === ''}
+									style={[
+										styles.AddButton,
+										todo === '' && styles.buttonDisabled,
+									]}
+								>
+									<Text style={styles.buttonText}>+Add</Text>
+								</TouchableOpacity>
 							</View>
-						)}
-					</View>
-				</ScrollView>
 
-				{/* Fixed Logout Button at the Bottom */}
-				<View style={styles.logoutButtonContainer}>
-					<Button onPress={handleLogout} title='Logout' />
+							{/* Render the todos list using .map */}
+							{todos.length > 0 && (
+								<View>
+									{todos.map((item) => (
+										<View key={item.id} style={styles.todoItem}>
+											<TouchableOpacity
+												onPress={() => toggleDone(item.id)}
+												style={{
+													flexDirection: 'row',
+
+													alignItems: 'center',
+													gap: 10,
+												}}
+											>
+												{!item.done ? (
+													<Ionicons
+														name='checkmark-circle'
+														size={24}
+														color='#6c7cac'
+													/>
+												) : (
+													<Entypo name='circle' size={24} color='#6c7cac' />
+												)}
+												<TouchableOpacity onPress={() => handleOpenModal(item)}>
+													<Text style={{ color: 'white', fontSize: 16 }}>
+														{item.title}
+													</Text>
+												</TouchableOpacity>
+											</TouchableOpacity>
+											<Ionicons
+												name='trash-bin-outline'
+												size={24}
+												color='red'
+												onPress={() => deleteTodo(item.id)}
+											/>
+										</View>
+									))}
+								</View>
+							)}
+						</View>
+					</ScrollView>
+
+					{/* Fixed Logout Button at the Bottom */}
+					<View style={styles.logoutButtonContainer}>
+						<Button onPress={handleLogout} title='Logout' />
+					</View>
 				</View>
-			</View>
-			{selectedTodo && (
-				<Details
-					visible={modalVisible}
-					onClose={handleCloseModal}
-					todo={selectedTodo}
-				/>
-			)}
-		</SafeAreaView>
+				{selectedTodo && (
+					<Details
+						visible={modalVisible}
+						onClose={handleCloseModal}
+						todo={selectedTodo}
+					/>
+				)}
+			</SafeAreaView>
+		</TouchableWithoutFeedback>
 	)
 }
 
