@@ -11,21 +11,21 @@ export function useTodos() {
 
 	// Fetch todos when the hook is used
 	useEffect(() => {
-		//every time this page loads, get list of todos from database that matches user's id
+		// every time this page loads, get list of todos from database that matches user's id
 		async function getTodos() {
 			try {
 				const jsonValue = await AsyncStorage.getItem('todos') // Fetch todos from AsyncStorage
 				if (jsonValue != null) {
-					//covert json string into todo object
+					// covert json string into todo object
 					const objects = JSON.parse(jsonValue)
-					//filter todo that matches currently logged in user
+					// filter todo that matches currently logged in user
 					const userTodos = objects.filter(
 						(todo: Todo) => todo.uid === globalUser?.uid
 					)
-					//set the todo list state for UI rendering
+					// set the todo list state for UI rendering
 					setTodos(userTodos) // Set fetched todos to state
 				} else {
-					//if no list set empty array
+					// if no list set empty array
 					setTodos([])
 				}
 			} catch (e) {
@@ -37,9 +37,9 @@ export function useTodos() {
 		getTodos()
 	}, [todos])
 
-	//TODO: This add function should be in hooks
+	// Optimistic update for adding a new todo
 	async function addTodo(title: string, clearInput: () => void) {
-		//create a new todo object
+		// create a new todo object
 		const newTodo: Todo = {
 			title: title,
 			done: false,
@@ -50,41 +50,30 @@ export function useTodos() {
 		try {
 			// Retrieve the existing todos list from AsyncStorage
 			const jsonValue = await AsyncStorage.getItem('todos')
+			let todos: Todo[] = jsonValue != null ? JSON.parse(jsonValue) : []
 
-			let todos: Todo[]
-
-			if (jsonValue != null) {
-				todos = JSON.parse(jsonValue)
-			} else {
-				todos = []
-			}
-
-			// Add the new Todo to the existing list (or to the empty array)
+			// Add the new Todo to the existing list
 			todos.push(newTodo)
 
-			//back object array to json string
-			const updatedJsonValue = JSON.stringify(todos)
 			// Save the updated list back to AsyncStorage
-			await AsyncStorage.setItem('todos', updatedJsonValue)
+			await AsyncStorage.setItem('todos', JSON.stringify(todos))
 
-			// for setting todos state, filter todos that match current user's uid
-			const userTodos = todos.filter(
-				(todo: Todo) => todo.uid === globalUser?.uid
-			)
-			setTodos(userTodos)
+			setTodos((prevTodos) => [...prevTodos, newTodo])
+			clearInput() // callback to clear input immediately
 
-			clearInput() //callback function
-			//   setTodo("");
 			console.log('Todo added successfully:', newTodo)
 		} catch (e) {
 			console.error('Error adding new todo:', e)
+			// Optionally, revert the optimistic update in case of an error
+			setTodos((prevTodos) =>
+				prevTodos.filter((todo) => todo.id !== newTodo.id)
+			)
 		}
 	}
 
-	//TODO: this function should be in hooks
 	async function toggleDone(id: string) {
 		try {
-			//Retrieve the existing todos list from AsyncStorage
+			// Retrieve the existing todos list from AsyncStorage
 			const jsonValue = await AsyncStorage.getItem('todos')
 
 			let todos: Todo[]
@@ -95,14 +84,14 @@ export function useTodos() {
 				todos = []
 			}
 
-			//Find todo by todo id
+			// Find todo by todo id
 			const index = todos.findIndex((todo) => todo.id === id)
 
 			if (index !== -1) {
-				//  Toggle the done status
+				// Toggle the done status
 				todos[index].done = !todos[index].done
 
-				//  Save the updated list back to AsyncStorage
+				// Save the updated list back to AsyncStorage
 				await AsyncStorage.setItem('todos', JSON.stringify(todos))
 
 				// for setting todos state, filter todos that match current user's uid
@@ -138,7 +127,7 @@ export function useTodos() {
 				// Filter out the todo item to delete
 				const updatedTodos = todos.filter((todo) => todo.id !== id)
 
-				//  Save the updated list back to AsyncStorage
+				// Save the updated list back to AsyncStorage
 				await AsyncStorage.setItem('todos', JSON.stringify(updatedTodos))
 
 				// for setting todos state, filter todos that match current user's uid
@@ -146,7 +135,7 @@ export function useTodos() {
 					(todo: Todo) => todo.uid === globalUser?.uid
 				)
 
-				//  Update the state with the new todos list
+				// Update the state with the new todos list
 				setTodos(userTodos)
 			}
 		} catch (e) {
