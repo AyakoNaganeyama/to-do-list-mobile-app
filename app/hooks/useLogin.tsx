@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import useUserStore from '../store/authStore'
 
-// Define the User type
+// user type
 interface User {
 	uid: string
 	email: string
@@ -19,7 +19,7 @@ export function useLogin() {
 		const jsonValue = await AsyncStorage.getItem('users') // get user data from async storage
 		if (jsonValue !== null) {
 			const users: User[] = JSON.parse(jsonValue) //covert json string into array of user objects
-			// Find the user that matches both email and password
+			// find the user that matches both email and password
 			const foundUser = users.find(
 				(user) => user.email === email && user.pass === password
 			)

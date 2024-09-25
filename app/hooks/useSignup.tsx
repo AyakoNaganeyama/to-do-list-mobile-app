@@ -5,7 +5,6 @@ import { useState } from 'react'
 import useUserStore from '../store/authStore'
 import { useToast } from '../hooks/useToast'
 
-// Define the User type
 interface User {
 	uid: string
 	email: string
@@ -49,7 +48,7 @@ export function useSignUp() {
 			// add new user to the storage
 			users.push(newUser)
 
-			// Save the updated list back to AsyncStorage
+			// save update to storage
 			const updatedJsonValue = JSON.stringify(users)
 			await AsyncStorage.setItem('users', updatedJsonValue)
 			globalLogin(newUser)
@@ -58,7 +57,7 @@ export function useSignUp() {
 
 			showSuccessToast('Signup Successful', `Hello, ${newUser.email}!`)
 
-			// Check if the user was successfully stored
+			// check user was stored
 			const userStored = await AsyncStorage.getItem('users')
 			if (userStored) {
 				const storedUsers = JSON.parse(userStored)
@@ -69,11 +68,11 @@ export function useSignUp() {
 				if (userExists) return newUser
 			}
 
-			return false // Return false if user was not stored correctly
+			return false // return false if failed
 		} catch (err) {
 			console.error('Error during sign up:', err)
 			showErrorToast('Sign Up Error', 'An error occurred during sign up.')
-			return false // Return false on error
+			return false // return false if failed
 		} finally {
 			setLoading(false)
 		}

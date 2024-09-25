@@ -85,7 +85,7 @@ export function List() {
 								</TouchableOpacity>
 							</View>
 
-							{/* Render the todos list using .map */}
+							{/* render the todos list using .map */}
 							{todos.length > 0 && (
 								<View>
 									{todos.map((item) => (
@@ -127,7 +127,7 @@ export function List() {
 						</View>
 					</ScrollView>
 
-					{/* Fixed Logout Button at the Bottom */}
+					{/* fixed Logout Button at the Bottom */}
 					<View style={styles.logoutButtonContainer}>
 						<Button onPress={handleLogout} title='Logout' />
 					</View>

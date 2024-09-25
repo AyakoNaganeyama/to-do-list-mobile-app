@@ -20,14 +20,13 @@ export function Details({ visible, onClose, todo }: DetailsProps) {
 	const { updateTodo } = useTodos() // Access updateTodo from the hook
 	const [editTitle, setEditTitle] = useState(todo?.title || '')
 
-	// Whenever the modal opens with a new todo, update the local state
+	// whenever the modal opens with a new todo, update the local state
 	useEffect(() => {
 		if (todo) {
 			setEditTitle(todo.title)
 		}
 	}, [todo])
 
-	// Handle saving changes
 	function handleSave() {
 		if (todo) {
 			const updatedTodo = { ...todo, title: editTitle } // Create an updated todo

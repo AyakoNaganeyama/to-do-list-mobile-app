@@ -1,7 +1,7 @@
 import React from 'react'
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message'
 
-// Custom toast configuration
+// toast configuration
 const toastConfig = {
 	success: (props: any) => (
 		<BaseToast
@@ -30,7 +30,7 @@ const toastConfig = {
 	),
 }
 
-// Hook to use Toast with custom configurations
+// toast hook with custom configurations
 function useToast() {
 	function showSuccessToast(text1: string, text2: string) {
 		Toast.show({

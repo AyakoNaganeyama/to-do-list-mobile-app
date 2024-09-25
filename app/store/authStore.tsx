@@ -6,11 +6,11 @@ interface UserState {
 	clearUser: () => void
 }
 
-// Create the Zustand store
+// create the Zustand store
 const useUserStore = create<UserState>((set) => ({
 	user: null, // Initial state
-	setUser: (user) => set({ user }), // Set user data
-	clearUser: () => set({ user: null }), // Clear user data
+	setUser: (user) => set({ user }), // set user data
+	clearUser: () => set({ user: null }), // clear user data
 }))
 
 export default useUserStore

@@ -9,7 +9,7 @@ export function useTodos() {
 	const [todos, setTodos] = useState<Todo[]>([]) // State to hold todos
 	const globalUser = useUserStore((state) => state.user) // Access the global user from Zustand
 
-	// Fetch todos when the hook is used
+	// fetch todos when the hook is used
 	useEffect(() => {
 		// every time this page loads, get list of todos from database that matches user's id
 		async function getTodos() {
@@ -37,7 +37,7 @@ export function useTodos() {
 		getTodos()
 	}, [todos])
 
-	// Optimistic update for adding a new todo
+	// optimistic update for adding a new todo
 	async function addTodo(title: string, clearInput: () => void) {
 		// create a new todo object
 		const newTodo: Todo = {
@@ -48,14 +48,14 @@ export function useTodos() {
 		}
 
 		try {
-			// Retrieve the existing todos list from AsyncStorage
+			// retrieve the existing todos list from AsyncStorage
 			const jsonValue = await AsyncStorage.getItem('todos')
 			let todos: Todo[] = jsonValue != null ? JSON.parse(jsonValue) : []
 
-			// Add the new Todo to the existing list
+			// add the new Todo to the existing list
 			todos.push(newTodo)
 
-			// Save the updated list back to AsyncStorage
+			// save the updated list back to AsyncStorage
 			await AsyncStorage.setItem('todos', JSON.stringify(todos))
 
 			setTodos((prevTodos) => [...prevTodos, newTodo])
@@ -64,7 +64,7 @@ export function useTodos() {
 			console.log('Todo added successfully:', newTodo)
 		} catch (e) {
 			console.error('Error adding new todo:', e)
-			// Optionally, revert the optimistic update in case of an error
+			// optionally, revert the optimistic update in case of an error
 			setTodos((prevTodos) =>
 				prevTodos.filter((todo) => todo.id !== newTodo.id)
 			)
@@ -73,7 +73,7 @@ export function useTodos() {
 
 	async function toggleDone(id: string) {
 		try {
-			// Retrieve the existing todos list from AsyncStorage
+			// retrieve the existing todos list from AsyncStorage
 			const jsonValue = await AsyncStorage.getItem('todos')
 
 			let todos: Todo[]
@@ -84,14 +84,14 @@ export function useTodos() {
 				todos = []
 			}
 
-			// Find todo by todo id
+			// find todo by todo id
 			const index = todos.findIndex((todo) => todo.id === id)
 
 			if (index !== -1) {
-				// Toggle the done status
+				// toggle the done status
 				todos[index].done = !todos[index].done
 
-				// Save the updated list back to AsyncStorage
+				// save the updated list back to AsyncStorage
 				await AsyncStorage.setItem('todos', JSON.stringify(todos))
 
 				// for setting todos state, filter todos that match current user's uid
@@ -99,7 +99,7 @@ export function useTodos() {
 					(todo: Todo) => todo.uid === globalUser?.uid
 				)
 
-				// Update the state with the new todos list
+				// update the state with the new todos list
 				setTodos(userTodos)
 			} else {
 				console.log(`Todo with id ${id} not found.`)
@@ -111,23 +111,23 @@ export function useTodos() {
 
 	async function deleteTodo(id: string) {
 		try {
-			// Retrieve the existing todos list from AsyncStorage
+			// retrieve the existing todos list from AsyncStorage
 			const jsonValue = await AsyncStorage.getItem('todos')
 			let todos: Todo[]
 
 			if (jsonValue != null) {
-				// If there is existing data in AsyncStorage
+				// if there is existing data in AsyncStorage
 				todos = JSON.parse(jsonValue)
 			} else {
-				// If there is no data in AsyncStorage (jsonValue is null)
+				// if there is no data in AsyncStorage (jsonValue is null)
 				todos = []
 			}
 
 			if (todos.length > 0) {
-				// Filter out the todo item to delete
+				// filter out the todo item to delete
 				const updatedTodos = todos.filter((todo) => todo.id !== id)
 
-				// Save the updated list back to AsyncStorage
+				// save the updated list back to AsyncStorage
 				await AsyncStorage.setItem('todos', JSON.stringify(updatedTodos))
 
 				// for setting todos state, filter todos that match current user's uid
@@ -135,7 +135,7 @@ export function useTodos() {
 					(todo: Todo) => todo.uid === globalUser?.uid
 				)
 
-				// Update the state with the new todos list
+				// update the state with the new todos list
 				setTodos(userTodos)
 			}
 		} catch (e) {
@@ -148,14 +148,14 @@ export function useTodos() {
 			const jsonValue = await AsyncStorage.getItem('todos')
 			let todos: Todo[] = jsonValue ? JSON.parse(jsonValue) : []
 
-			// Find and update the specific todo
+			// find and update the specific todo
 			const index = todos.findIndex((todo) => todo.id === updatedTodo.id)
 			if (index !== -1) {
-				todos[index] = updatedTodo // Update the todo in the array
+				todos[index] = updatedTodo // update the todo in the array
 				await AsyncStorage.setItem('todos', JSON.stringify(todos)) // Save to AsyncStorage
 
 				const userTodos = todos.filter((todo) => todo.uid === globalUser?.uid)
-				setTodos(userTodos) // Update the state with the new todos list
+				setTodos(userTodos) // update the state with the new todos list
 				console.log(userTodos)
 				console.log(todos)
 			} else {
