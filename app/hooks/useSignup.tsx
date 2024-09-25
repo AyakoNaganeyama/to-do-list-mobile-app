@@ -27,7 +27,7 @@ export function useSignUp() {
 		}
 
 		try {
-			// Retrieve the existing todos list from AsyncStorage
+			// get existing users form storage
 			const jsonValue = await AsyncStorage.getItem('users')
 
 			let users: User[]
@@ -38,18 +38,15 @@ export function useSignUp() {
 				users = []
 			}
 
-			//TODO: REMOVE THIS. CHANGE TO EMAIL ALREADY EXIST
-			// check if entered password already exists
+			// check email already exists
 			const emailExist = users.some((user) => user.email === email)
 			if (emailExist) {
-				//if password already exists in database show error toast
-				showErrorToast('Sign Up Failed', 'Email already register.')
-
-				return
+				// check if email exists in database show error toast
+				showErrorToast('Sign Up Failed', 'Email already registered.')
+				return false // return false if email exists
 			}
 
-			// Add the new Todo to the existing list (or to the empty array)
-
+			// add new user to the storage
 			users.push(newUser)
 
 			// Save the updated list back to AsyncStorage
@@ -57,16 +54,26 @@ export function useSignUp() {
 			await AsyncStorage.setItem('users', updatedJsonValue)
 			globalLogin(newUser)
 
-			console.log('user added successfully:', newUser)
+			console.log('User added successfully:', newUser)
 
 			showSuccessToast('Signup Successful', `Hello, ${newUser.email}!`)
 
-			//This is for testing to see who is in database after adding the new user
-			const after = await AsyncStorage.getItem('users')
-			console.log(after)
+			// Check if the user was successfully stored
+			const userStored = await AsyncStorage.getItem('users')
+			if (userStored) {
+				const storedUsers = JSON.parse(userStored)
+				const userExists = storedUsers.some(
+					(user: User) => user.email === email
+				)
+
+				if (userExists) return newUser
+			}
+
+			return false // Return false if user was not stored correctly
 		} catch (err) {
 			console.error('Error during sign up:', err)
 			showErrorToast('Sign Up Error', 'An error occurred during sign up.')
+			return false // Return false on error
 		} finally {
 			setLoading(false)
 		}
