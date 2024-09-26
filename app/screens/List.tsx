@@ -14,13 +14,13 @@ import {
 import { Entypo } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
 import { useState } from 'react'
+import { LinearGradient } from 'expo-linear-gradient' // Import for Gradient Background
 
 import { Details } from './Details'
 import { useLogout } from '../hooks/useLogout'
 import { useTodos } from '../hooks/useTodos'
 import { useToast } from '../hooks/useToast'
 
-// todo class
 export interface Todo {
 	title: string
 	done: boolean
@@ -28,7 +28,6 @@ export interface Todo {
 	uid: string
 }
 
-//todo list page
 export function List() {
 	const [todo, setTodo] = useState('') // each todo
 	const [modalVisible, setModalVisible] = useState(false)
@@ -39,7 +38,7 @@ export function List() {
 	const { showSuccessToast } = useToast()
 
 	function handleAddTodo() {
-		addTodo(todo, () => setTodo('')) // setTodo function is call back
+		addTodo(todo, () => setTodo('')) // clear input after adding todo
 	}
 
 	function handleOpenModal(todo: Todo) {
@@ -60,18 +59,33 @@ export function List() {
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<SafeAreaView style={styles.container}>
-				<View style={{ flex: 1, justifyContent: 'space-between' }}>
-					{/*todos*/}
-					<ScrollView style={{ flex: 1 }}>
+				<LinearGradient
+					colors={['#e0f7fa', '#ffffff']}
+					style={styles.background}
+				>
+					<View style={styles.header}>
+						<Text style={styles.headerText}>YOUR TODOS</Text>
+					</View>
+
+					<View style={{ flex: 1, justifyContent: 'space-between' }}>
+						{/* Input Section */}
 						<View style={styles.todos}>
 							<View style={styles.inputHead}>
-								<TextInput
-									placeholder='Add new todo'
-									onChangeText={(text) => setTodo(text)}
-									value={todo}
-									placeholderTextColor='gray'
-									style={styles.input}
-								/>
+								<View style={styles.inputContainer}>
+									<Ionicons
+										name='add-circle-outline'
+										size={20}
+										color='#8e8e93'
+										style={styles.icon}
+									/>
+									<TextInput
+										placeholder='Add new todo'
+										onChangeText={(text) => setTodo(text)}
+										value={todo}
+										placeholderTextColor='#8e8e93'
+										style={styles.input}
+									/>
+								</View>
 
 								<TouchableOpacity
 									onPress={handleAddTodo}
@@ -81,64 +95,67 @@ export function List() {
 										todo === '' && styles.buttonDisabled,
 									]}
 								>
-									<Text style={styles.buttonText}>+Add</Text>
+									<Text style={styles.buttonText}>+ Add</Text>
 								</TouchableOpacity>
 							</View>
 
-							{/* render the todos list using .map */}
-							{todos.length > 0 && (
-								<View>
-									{todos.map((item) => (
-										<View key={item.id} style={styles.todoItem}>
-											<TouchableOpacity
-												onPress={() => toggleDone(item.id)}
-												style={{
-													flexDirection: 'row',
-
-													alignItems: 'center',
-													gap: 10,
-												}}
-											>
-												{!item.done ? (
-													<Ionicons
-														name='checkmark-circle'
-														size={24}
-														color='#6c7cac'
-													/>
-												) : (
-													<Entypo name='circle' size={24} color='#6c7cac' />
-												)}
-												<TouchableOpacity onPress={() => handleOpenModal(item)}>
-													<Text style={{ color: 'white', fontSize: 16 }}>
-														{item.title}
-													</Text>
+							{/* Todo List */}
+							<ScrollView style={{ flex: 1 }}>
+								{todos.length > 0 && (
+									<View>
+										{todos.map((item) => (
+											<View key={item.id} style={styles.todoItem}>
+												<TouchableOpacity
+													onPress={() => toggleDone(item.id)}
+													style={{
+														flexDirection: 'row',
+														alignItems: 'center',
+														gap: 10,
+													}}
+												>
+													{item.done ? (
+														<Ionicons
+															name='checkmark-circle'
+															size={24}
+															color='#007aff'
+														/>
+													) : (
+														<Entypo name='circle' size={24} color='#007aff' />
+													)}
+													<TouchableOpacity
+														onPress={() => handleOpenModal(item)}
+													>
+														<Text style={styles.todoText}>{item.title}</Text>
+													</TouchableOpacity>
 												</TouchableOpacity>
-											</TouchableOpacity>
-											<Ionicons
-												name='trash-bin-outline'
-												size={24}
-												color='red'
-												onPress={() => deleteTodo(item.id)}
-											/>
-										</View>
-									))}
-								</View>
-							)}
-						</View>
-					</ScrollView>
 
-					{/* fixed Logout Button at the Bottom */}
-					<View style={styles.logoutButtonContainer}>
-						<Button onPress={handleLogout} title='Logout' />
+												<Ionicons
+													name='trash-bin-outline'
+													size={24}
+													color='#ff5252'
+													onPress={() => deleteTodo(item.id)}
+												/>
+											</View>
+										))}
+									</View>
+								)}
+							</ScrollView>
+						</View>
+
+						{/* Logout Button */}
+						<View style={styles.logoutButtonContainer}>
+							<Button onPress={handleLogout} title='Logout' />
+						</View>
 					</View>
-				</View>
-				{selectedTodo && (
-					<Details
-						visible={modalVisible}
-						onClose={handleCloseModal}
-						todo={selectedTodo}
-					/>
-				)}
+
+					{selectedTodo && (
+						<Details
+							visible={modalVisible}
+							onClose={handleCloseModal}
+							todo={selectedTodo}
+						/>
+					)}
+				</LinearGradient>
 			</SafeAreaView>
 		</TouchableWithoutFeedback>
 	)
@@ -146,44 +163,63 @@ export function List() {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#080404',
 		flex: 1,
 	},
-	todos: {
+	background: {
 		flex: 1,
-		padding: 10,
-
-		marginHorizontal: 20,
+	},
+	header: {
+		marginTop: 20,
+		paddingVertical: 30,
+		paddingHorizontal: 30,
+	},
+	headerText: {
+		fontSize: 24,
+		fontWeight: 'bold',
+		color: '#007aff',
+		textAlign: 'center',
+	},
+	todos: {
+		padding: 20,
+		flex: 1,
 	},
 	inputHead: {
 		flexDirection: 'row',
-		marginTop: 30,
 		justifyContent: 'space-between',
-		height: 50,
-		marginBottom: 30,
+		marginBottom: 20,
+	},
+	inputContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		backgroundColor: '#f5f5f5',
+		borderRadius: 10,
+		paddingHorizontal: 10,
+		flex: 1,
+		marginRight: 10,
+		borderWidth: 1,
+		borderColor: '#007aff',
+	},
+	icon: {
+		marginRight: 10,
 	},
 	input: {
-		width: '70%',
-		padding: 15,
-		borderWidth: 2,
-		borderColor: '#51606b',
-		borderRadius: 10,
-		color: 'white',
-		fontWeight: 'bold',
+		flex: 1,
+		paddingVertical: 10,
+		fontSize: 16,
+		color: '#333',
 	},
 	AddButton: {
-		backgroundColor: '#6c7cac',
-		paddingVertical: 10,
+		backgroundColor: '#007aff',
 		paddingHorizontal: 20,
+		paddingVertical: 10,
 		borderRadius: 10,
-		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	buttonDisabled: {
-		backgroundColor: '#8e979e',
+		backgroundColor: '#c7c7c7',
 	},
 	buttonText: {
-		color: 'white',
+		color: '#ffffff',
 		fontSize: 16,
 		fontWeight: 'bold',
 	},
@@ -191,16 +227,22 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingVertical: 20,
-		width: '100%',
-
-		marginBottom: 10,
+		backgroundColor: '#ffffff',
+		padding: 20,
 		borderRadius: 10,
-		backgroundColor: '#3f4145',
-		paddingHorizontal: 20,
+		marginBottom: 10,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 5,
+		borderColor: '#007aff',
+		borderWidth: 1,
+	},
+	todoText: {
+		fontSize: 16,
+		color: '#333',
 	},
 	logoutButtonContainer: {
 		padding: 10,
-		backgroundColor: '#080404', // Optional: Set background for clarity
 	},
 })

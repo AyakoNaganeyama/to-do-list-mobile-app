@@ -20,7 +20,7 @@ export function Details({ visible, onClose, todo }: DetailsProps) {
 	const { updateTodo } = useTodos() // Access updateTodo from the hook
 	const [editTitle, setEditTitle] = useState(todo?.title || '')
 
-	// whenever the modal opens with a new todo, update the local state
+	// update the local state when modal open
 	useEffect(() => {
 		if (todo) {
 			setEditTitle(todo.title)
@@ -29,9 +29,9 @@ export function Details({ visible, onClose, todo }: DetailsProps) {
 
 	function handleSave() {
 		if (todo) {
-			const updatedTodo = { ...todo, title: editTitle } // Create an updated todo
-			updateTodo(updatedTodo) // Call updateTodo from the hook to update in AsyncStorage
-			onClose() // Close the modal after updating
+			const updatedTodo = { ...todo, title: editTitle } // add new todo using spread operator
+			updateTodo(updatedTodo) // push updates to storage using hook
+			onClose() // close modal at end
 		}
 	}
 
@@ -46,17 +46,22 @@ export function Details({ visible, onClose, todo }: DetailsProps) {
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<Text style={styles.modalText}>Edit Todo</Text>
+					<Text style={styles.modalTitle}>Edit Task</Text>
+
 					<TextInput
 						style={styles.input}
 						value={editTitle}
 						onChangeText={setEditTitle}
 					/>
-					<TouchableOpacity style={styles.button} onPress={handleSave}>
-						<Text style={styles.textStyle}>Save</Text>
+
+					{/* Save Button */}
+					<TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+						<Text style={styles.buttonText}>Save</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button} onPress={onClose}>
-						<Text style={styles.textStyle}>Close</Text>
+
+					{/* Close Button */}
+					<TouchableOpacity style={styles.closeButton} onPress={onClose}>
+						<Text style={styles.buttonText}>Close</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -69,45 +74,59 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: 22,
+		backgroundColor: 'rgba(0,0,0,0.5)',
 	},
 	modalView: {
-		margin: 20,
-		backgroundColor: 'white',
+		width: '80%',
+		backgroundColor: '#ffffff',
 		borderRadius: 20,
-		padding: 35,
+		padding: 20,
 		alignItems: 'center',
 		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.3,
 		shadowRadius: 4,
 		elevation: 5,
 	},
-	input: {
-		width: 200,
-		height: 40,
-		borderColor: 'gray',
-		borderWidth: 1,
-		padding: 10,
-		marginBottom: 10,
-	},
-	button: {
-		borderRadius: 20,
-		padding: 10,
-		backgroundColor: '#2196F3',
-		marginTop: 10,
-	},
-	textStyle: {
-		color: 'white',
+	modalTitle: {
+		fontSize: 24,
 		fontWeight: 'bold',
+		color: '#007aff',
+		marginBottom: 20,
 		textAlign: 'center',
 	},
-	modalText: {
+	input: {
+		width: '100%',
+		height: 50,
+		backgroundColor: '#f5f5f5',
+		borderColor: '#007aff',
+		borderWidth: 1,
+		borderRadius: 12,
+		paddingHorizontal: 15,
+		fontSize: 16,
+		color: '#333',
+		marginBottom: 20,
+	},
+	saveButton: {
+		backgroundColor: '#007aff',
+		borderRadius: 12,
+		paddingVertical: 12,
+		paddingHorizontal: 25,
 		marginBottom: 15,
-		textAlign: 'center',
-		fontSize: 20,
+		width: '100%',
+		alignItems: 'center',
+	},
+	closeButton: {
+		backgroundColor: '#ff5252',
+		borderRadius: 12,
+		paddingVertical: 12,
+		paddingHorizontal: 25,
+		width: '100%',
+		alignItems: 'center',
+	},
+	buttonText: {
+		color: '#ffffff',
+		fontSize: 16,
+		fontWeight: 'bold',
 	},
 })

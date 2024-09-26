@@ -10,6 +10,8 @@ import {
 	Keyboard,
 } from 'react-native'
 import { useState } from 'react'
+import { LinearGradient } from 'expo-linear-gradient'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import { useLogin } from '../hooks/useLogin'
 import { useSignUp } from '../hooks/useSignup'
@@ -43,7 +45,6 @@ export function Login() {
 		}
 
 		const signedUpUser = await signUp(email, pass)
-		console.log('user signed up:', signedUpUser)
 		if (signedUpUser)
 			showSuccessToast('SignUp Successful', `Welcome, ${signedUpUser.email}!`)
 		else showErrorToast('SignUp Failed', 'Error creating account.')
@@ -61,7 +62,6 @@ export function Login() {
 		}
 
 		const loggedInUser = await login(email, pass)
-		console.log('user logged in:', loggedInUser)
 
 		if (loggedInUser)
 			showSuccessToast(
@@ -74,61 +74,87 @@ export function Login() {
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<SafeAreaView style={styles.safeArea}>
-				<View style={styles.container}>
-					<TextInput
-						placeholder='enter email'
-						onChangeText={(text) => {
-							setEmail(text)
-							setErrors({ ...errors, email: '' })
-						}}
-						value={email}
-						style={styles.input}
-						placeholderTextColor={'gray'}
-						keyboardType='email-address'
-					/>
-					{errors.email ? (
-						<Text style={styles.errorText}>{errors.email}</Text>
-					) : null}
+				<LinearGradient
+					colors={['#e0f7fa', '#ffffff']}
+					style={styles.background}
+				>
+					<View style={styles.container}>
+						{/* Heading */}
+						<Icon name='checkmark-circle-outline' size={80} color='#007aff' />
+						<Text style={styles.heading}>Smart Todo</Text>
 
-					<TextInput
-						placeholder='enter password'
-						onChangeText={(text) => {
-							setPass(text)
-							setErrors({ ...errors, pass: '' })
-						}}
-						value={pass}
-						style={styles.input}
-						placeholderTextColor={'gray'}
-						secureTextEntry={true} // Hides password text
-					/>
-					{errors.pass ? (
-						<Text style={styles.errorText}>{errors.pass}</Text>
-					) : null}
+						{/* Input for Email */}
+						<View style={styles.inputContainer}>
+							<Icon
+								name='mail-outline'
+								size={20}
+								color='#8e8e93'
+								style={styles.icon}
+							/>
+							<TextInput
+								placeholder='Enter Email'
+								onChangeText={(text) => {
+									setEmail(text)
+									setErrors({ ...errors, email: '' })
+								}}
+								value={email}
+								style={styles.input}
+								placeholderTextColor={'#8e8e93'}
+								keyboardType='email-address'
+							/>
+						</View>
+						{errors.email ? (
+							<Text style={styles.errorText}>{errors.email}</Text>
+						) : null}
 
-					<View style={{ marginBottom: 20 }} />
+						{/* Input for Password */}
+						<View style={styles.inputContainer}>
+							<Icon
+								name='lock-closed-outline'
+								size={20}
+								color='#8e8e93'
+								style={styles.icon}
+							/>
+							<TextInput
+								placeholder='Enter Password'
+								onChangeText={(text) => {
+									setPass(text)
+									setErrors({ ...errors, pass: '' })
+								}}
+								value={pass}
+								style={styles.input}
+								placeholderTextColor={'#8e8e93'}
+								secureTextEntry={true}
+							/>
+						</View>
+						{errors.pass ? (
+							<Text style={styles.errorText}>{errors.pass}</Text>
+						) : null}
 
-					<TouchableOpacity
-						onPress={handleSignUp}
-						disabled={email === '' || pass === ''}
-						style={[
-							styles.Button,
-							(email === '' || pass === '') && styles.buttonDisabled,
-						]}
-					>
-						<Text style={styles.buttonText}>Create Account</Text>
-					</TouchableOpacity>
+						{/* Buttons */}
+						<TouchableOpacity
+							onPress={handleSignUp}
+							disabled={email === '' || pass === ''}
+							style={[
+								styles.Button,
+								(email === '' || pass === '') && styles.buttonDisabled,
+							]}
+						>
+							<Text style={styles.buttonText}>Create Account</Text>
+						</TouchableOpacity>
 
-					<TouchableOpacity
-						onPress={handleLogin}
-						disabled={email === '' || pass === ''}
-						style={[
-							styles.Button,
-							(email === '' || pass === '') && styles.buttonDisabled,
-						]}
-					>
-						<Text style={styles.buttonText}>Log in</Text>
-					</TouchableOpacity>
-				</View>
+						<TouchableOpacity
+							onPress={handleLogin}
+							disabled={email === '' || pass === ''}
+							style={[
+								styles.Button,
+								(email === '' || pass === '') && styles.buttonDisabled,
+							]}
+						>
+							<Text style={styles.buttonText}>Log in</Text>
+						</TouchableOpacity>
+					</View>
+				</LinearGradient>
 			</SafeAreaView>
 		</TouchableWithoutFeedback>
 	)
@@ -136,47 +162,67 @@ export function Login() {
 
 const styles = StyleSheet.create({
 	safeArea: {
-		alignItems: 'center',
-		backgroundColor: '#080404',
+		flex: 1,
+	},
+	background: {
 		flex: 1,
 		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	container: {
-		paddingHorizontal: 10,
-		width: '80%',
+		width: '85%',
+		alignItems: 'center',
 	},
-	input: {
-		backgroundColor: '#3f4145',
-		borderColor: '#6c7cac',
-		borderRadius: 10,
-		borderWidth: 2,
-		color: '#fff',
-		height: 50,
-		marginBottom: 10,
-		padding: 5,
+	heading: {
+		fontSize: 32,
+		color: '#007aff',
+		fontWeight: 'bold',
+		marginBottom: 30,
+	},
+	inputContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		backgroundColor: '#f5f5f5',
+		borderColor: '#007aff',
+		borderRadius: 12,
+		borderWidth: 1.5,
+		paddingHorizontal: 10,
+		paddingVertical: 12,
+		marginBottom: 20,
 		width: '100%',
 	},
+	icon: {
+		marginRight: 10,
+	},
+	input: {
+		flex: 1,
+		color: '#333333',
+		fontSize: 16,
+	},
 	Button: {
+		backgroundColor: '#007aff',
+		paddingVertical: 16,
+		borderRadius: 12,
 		alignItems: 'center',
-		backgroundColor: '#6c7cac',
-		borderRadius: 10,
 		justifyContent: 'center',
-		marginBottom: 10,
-		marginHorizontal: 30,
-		paddingHorizontal: 20,
-		paddingVertical: 10,
+		marginVertical: 10,
+		width: '100%',
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.2,
+		shadowRadius: 3,
 	},
 	buttonDisabled: {
-		backgroundColor: '#8e979e',
+		backgroundColor: '#c7c7c7',
 	},
 	buttonText: {
-		color: 'white',
-		fontSize: 16,
+		color: '#ffffff',
+		fontSize: 18,
 		fontWeight: 'bold',
 	},
 	errorText: {
-		color: 'red',
-		fontSize: 12,
+		color: '#ff5252',
+		fontSize: 13,
 		marginBottom: 10,
 	},
 })
