@@ -37,7 +37,11 @@ export function Login() {
 
   const handleSignUp = async () => {
     if (!validateEmail(email)) {
-      setErrors({ ...errors, email: "Invalid email format." });
+      setErrors({
+        ...errors,
+        email:
+          "Please enter a valid email address, such as 'example@domain.com.",
+      });
       return;
     }
 
