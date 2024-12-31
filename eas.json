@@ -1,4 +1,7 @@
 {
+  "cli": {
+    "appVersionSource": "remote"
+  },
   "build": {
     "development": {
       "developmentClient": true,
@@ -10,7 +13,7 @@
       "channel": "preview"
     },
     "production": {
-      "channel": "production"
+      "autoIncrement": true
     }
   }
 }
