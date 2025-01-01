@@ -13,7 +13,7 @@ The application is a simple to-do app that runs on iphone and android phones, th
 ## Running the App
 
 1. **How to view the app**:
-   - Scan the QR code displayed in the terminal using the **Expo Go** app on your phone or by scanning it with your camera.
+   - Scan the QR code displayed below using the **Expo Go** app on your phone or by scanning it with your camera.
      The app hosted live and can be viewed by downloading the **Expo Go** app from your app store and scanning the following QR code below:
 
 [Scan this QR code to view the app](https://expo.dev/preview/update?message=set%20addVersionSource&updateRuntimeVersion=1.1.0&createdAt=2024-12-31T01%3A02%3A09.239Z&slug=exp&projectId=ba97eb8d-f733-4ac9-b817-975a16122842&group=9b10e8b7-47f0-4483-a75c-bbc20d22645e).
@@ -24,7 +24,7 @@ The application is a simple to-do app that runs on iphone and android phones, th
 
 ## Archtecture Diagram
 
-The following show cases how we structured our code. We have 3 layers, a presentation layer consisting of 3 views auth (login/signup), todo list, and details view with all presentation logic housed. Our second layer is our business logic that houses signup, login, useTodos which handles all our CRUD logic related to our models stored in local storage using ayscneStores to access devices memory for long term storage. The database uses Nosql. We also have a global state which is a domain that access through out the app for tracking the users session interaction, example if logged in or not.
+The following show cases how we structured our code. It has 3 layers, a presentation layer consisting of 3 views auth (login/signup), todo list, and details view with all presentation logic housed. the second layer is a business logic that houses signup, login, useTodos which handles all CRUD logic related to the models stored in local storage using ayscneStores to access devices memory for long term storage. The database uses Nosql. We also have a global state which is a domain that access through out the app for tracking the users session interaction, example if logged in or not.
 
 ![alt text](./to-do-diagram.jpg)<br />
 
