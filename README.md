@@ -37,6 +37,8 @@ Please note: that the buttons are disabled and greyed out until the user enters 
 
 ![alt text](../to-do-list-app/Screenshots/demo-login.jpg)
 
+<img src="../to-do-list-app/Screenshots/demo-login.jpg" />
+
 2. **Email validation**:
    Emails that do not follow name@domain.com format will not be allowed to be entered as seen below. Also the buttons are now enabled allowing users to continue
    ![alt text](../to-do-list-app/Screenshots/demo-email.jpg)
