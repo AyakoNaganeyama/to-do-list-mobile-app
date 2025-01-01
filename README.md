@@ -44,29 +44,26 @@ The following show cases how we structured our code. We have 3 layers, a present
 
 - Please note: that the password is not displayed in the input due to iPhone security and does not allow for password screen shots when password inputs are detected
 
-![alt text](./demo-passwordValidation.jpg)
-
 4. **User validation**:
-   You can not create an account if the account exists already.
-
-You can not login if there is no such account as well.
-![alt text](./demo-userValidation.jpg)
+   You can not create an account if the account exists already. You can not login if there is no such account as well.
+   ![alt text](./demo-userValidation.jpg)
 
 5. **Main page**:
    Once the user has logged in they will be presented with the following screen
-   ![alt text](../to-do-list-app/Screenshots/demo-mainpage.jpg)
+   ![alt text](./demo-mainpage.jpg)
 
 6. **Creating todos**:
    Once the user has clicked the text input the button will also be enabled.
 
-![alt text](../to-do-list-app/Screenshots/demo-creatingtodos.jpg)
+![alt text](./demo-creatingtodos.jpg)
 
 7. **Storing todo**:
 
 Once the add button is clicked, it will be stored then re-fetched from local storage also executing a validation check to see if it was stored correctly then displayed bellow as a list of todos.
 
-You can also toggle the tick to show that the todo is complete, this is also updated in local storage for persisting.
-![alt text](../to-do-list-app/Screenshots/demo-sortingtodos.jpg)
+- You can also toggle the tick to show that the todo is complete, this is also updated in local storage for persisting.
+
+![alt text](./demo-sortingtodos.jpg)
 
 8. **Updating todos**:
    If the user clicks the todo a modal pop up will be presented to allow users to update their todos as seen below.
