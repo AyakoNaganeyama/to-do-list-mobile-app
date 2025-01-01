@@ -35,8 +35,9 @@ The following show cases how we structured our code. We have 3 layers, a present
 
 ![alt text](./demo-login.jpg)
 
-2. **Email validation**:Emails that do not follow name@domain.com format will not be allowed to be entered as seen below. Also the buttons are now enabled allowing users to continue
-   <img src="./demo-email.jpg" alt="alt text" width="200" height="500">
+2. **Email validation**:Emails that do not follow name@domain.com format will not be allowed to be entered as seen below. Also the buttons are now enabled allowing users to continue.
+
+![alt text](./demo-email.jpg)
 
 3. **Password validation**:
    Simple validation to check length of password (at least 6 charactors).
