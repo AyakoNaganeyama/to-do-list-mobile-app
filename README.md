@@ -35,9 +35,7 @@ The following show cases how we structured our code. We have 3 layers, a present
 
 Please note: that the buttons are disabled and greyed out until the user enters their details.
 
-![alt text](../to-do-list-app/Screenshots/demo-login.jpg)
-
-<img src="../to-do-list-app/Screenshots/demo-login.jpg" />
+![alt text](./demo-login.jpg)
 
 2. **Email validation**:
    Emails that do not follow name@domain.com format will not be allowed to be entered as seen below. Also the buttons are now enabled allowing users to continue
