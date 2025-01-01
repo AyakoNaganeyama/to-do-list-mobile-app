@@ -42,7 +42,7 @@ The following show cases how we structured our code. We have 3 layers, a present
 3. **Password validation**:
    Simple validation to check length of password (at least 6 charactors).
 
-- Please note: that the password is not displayed in the input due to iPhone security and does not allow for password screen shots when password inputs are detected
+   - Please note: that the password is not displayed in the input due to iPhone security and does not allow for password screen shots when password inputs are detected
 
 4. **User validation**:
    You can not create an account if the account exists already. You can not login if there is no such account as well.
@@ -72,8 +72,7 @@ The following show cases how we structured our code. We have 3 layers, a present
 
 9. **Deleting todos**:
    a bin icon that allows users to delete their todos.
-
-- This will then clear the ui and also remove the todo from the todos list of the logged in user.
+   - This will then clear the ui and also remove the todo from the todos list of the logged in user.
 
 ![alt text](./demo-deletedotos.jpg)
 
