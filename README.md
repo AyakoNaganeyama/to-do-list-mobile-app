@@ -73,7 +73,7 @@ The following show cases how we structured our code. We have 3 layers, a present
 9. **Deleting todos**:
    a bin icon that allows users to delete their todos.
 
-This will then clear the ui and also remove the todo from the todos list of the logged in user.
+- This will then clear the ui and also remove the todo from the todos list of the logged in user.
 
 ![alt text](./demo-deletedotos.jpg)
 
