@@ -57,9 +57,7 @@ The following show cases how we structured our code. We have 3 layers, a present
 
 ![alt text](./demo-creatingtodos.jpg)
 
-7. **Storing todo**:
-
-Once the add button is clicked, it will be stored then re-fetched from local storage also executing a validation check to see if it was stored correctly then displayed bellow as a list of todos.
+7. **Storing todo**:Once the add button is clicked, it will be stored then re-fetched from local storage also executing a validation check to see if it was stored correctly then displayed bellow as a list of todos.
 
 - You can also toggle the tick to show that the todo is complete, this is also updated in local storage for persisting.
 
@@ -67,22 +65,23 @@ Once the add button is clicked, it will be stored then re-fetched from local sto
 
 8. **Updating todos**:
    If the user clicks the todo a modal pop up will be presented to allow users to update their todos as seen below.
-   ![alt text](../to-do-list-app/Screenshots/demo-updatingtodos.jpg)
+   ![alt text](./demo-updatingtodos.jpg)
 
 9. **Deleting todos**:
    a bin icon that allows users to delete their todos.
 
 This will then clear the ui and also remove the todo from the todos list of the logged in user.
-![alt text](../to-do-list-app/Screenshots/demo-deletedotos.jpg)
+![alt text](./demo-deletedotos.jpg)
 
 10. **Deleting todos**:
     As seen bellow, users can add their todos then logout or leave the app completely.
-    ![alt text](../to-do-list-app/Screenshots/demo-datapresistance.jpg)
+
+![alt text](./demo-datapresistance.jpg)
 
 Once the user relaunches the app and logs back in their todo’s will still be viewable, updateable and delectable
 
-![alt text](../to-do-list-app/Screenshots/demo-datapresistance2.jpg)
+![alt text](./demo-datapresistance2.jpg)
 
 11. **Unit tests**:
     tests focused on the logout and sign up logic to test
-    ![alt text](../to-do-list-app/Screenshots/demo-tests.jpg)
+    ![alt text](./demo-tests.jpg)
