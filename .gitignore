@@ -36,3 +36,6 @@ yarn-error.*
 
 # testing code coverage
 coverage/
+
+# Ignore environment variables file
+.env
