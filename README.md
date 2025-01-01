@@ -46,11 +46,13 @@ The following show cases how we structured our code. We have 3 layers, a present
 
 4. **User validation**:
    You can not create an account if the account exists already. You can not login if there is no such account as well.
-   ![alt text](./demo-userValidation.jpg)
+
+![alt text](./demo-userValidation.jpg)
 
 5. **Main page**:
    Once the user has logged in they will be presented with the following screen
-   ![alt text](./demo-mainpage.jpg)
+
+![alt text](./demo-mainpage.jpg)
 
 6. **Creating todos**:
    Once the user has clicked the text input the button will also be enabled.
@@ -65,12 +67,14 @@ The following show cases how we structured our code. We have 3 layers, a present
 
 8. **Updating todos**:
    If the user clicks the todo a modal pop up will be presented to allow users to update their todos as seen below.
-   ![alt text](./demo-updatingtodos.jpg)
+
+![alt text](./demo-updatingtodos.jpg)
 
 9. **Deleting todos**:
    a bin icon that allows users to delete their todos.
 
 This will then clear the ui and also remove the todo from the todos list of the logged in user.
+
 ![alt text](./demo-deletedotos.jpg)
 
 10. **Deleting todos**:
@@ -84,4 +88,5 @@ Once the user relaunches the app and logs back in their todo’s will still be v
 
 11. **Unit tests**:
     tests focused on the logout and sign up logic to test
-    ![alt text](./demo-tests.jpg)
+
+![alt text](./demo-tests.jpg)
