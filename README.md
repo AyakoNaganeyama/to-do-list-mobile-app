@@ -20,7 +20,7 @@ The application is a simple to-do app that runs on iphone and android phones, th
 
 ### If link is not working can scan here
 
-![QR code](./updatedQR-todo.jpg)<br />
+![QR code](./QR1-10-2025.jpg)<br />
 
 ## Archtecture Diagram
 
