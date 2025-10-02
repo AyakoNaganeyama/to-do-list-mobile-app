@@ -16,7 +16,7 @@ The application is a simple to-do app that runs on iphone and android phones, th
    - Scan the QR code displayed below using the **Expo Go** app on your phone or by scanning it with your camera.
      The app hosted live and can be viewed by downloading the **Expo Go** app from your app store and scanning the following QR code below:
 
-[Scan this QR code to view the app](https://expo.dev/preview/update?message=Fix+bug+in+login+screen&updateRuntimeVersion=1.0.0&createdAt=2025-08-10T09%3A59%3A33.583Z&slug=exp&projectId=ba97eb8d-f733-4ac9-b817-975a16122842&group=80ae8c98-d873-4f64-b566-1754e83e5d33).
+[Scan this QR code to view the app](https://expo.dev/preview/update?message=SDK+update&updateRuntimeVersion=1.0.0&createdAt=2025-10-01T02%3A11%3A05.930Z&slug=exp&projectId=ba97eb8d-f733-4ac9-b817-975a16122842&group=0f58ab30-7b57-438e-84df-307a22e605b7).
 
 ### If link is not working can scan here
 
