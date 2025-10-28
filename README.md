@@ -1,91 +1,173 @@
-# to-do-list-app
+# 📝 To-Do List App
 
-## About
+A simple, cross-platform **To-Do List application** built with **TypeScript** and **Expo (React Native)**.
+The app runs seamlessly on both **iOS** and **Android** devices, and the codebase can be easily converted to **JavaScript** if needed.
 
-The application is a simple to-do app that runs on iphone and android phones, the code base can also be converted into java and script from typescript. <br />
+---
 
-## Prerequisites
+## 📱 Prerequisites
 
-1. **Install Expo Go (you do no need to register to use the app)**:
-   - **iOS**: [Download Expo Go from the App Store](https://apps.apple.com/us/app/expo-go/id982107779).
-   - **Android**: [Download Expo Go from Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent).<br />
+1. **Install Expo Go** (no registration required):
+   - **iOS:** [Download from the App Store](https://apps.apple.com/us/app/expo-go/id982107779)
+   - **Android:** [Download from Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
-## Running the App
+---
 
-1. **How to view the app**:
-   - Scan the QR code displayed below using the **Expo Go** app on your phone or by scanning it with your camera.
-     The app hosted live and can be viewed by downloading the **Expo Go** app from your app store and scanning the following QR code below:
+## 🚀 Running the App
 
-[Scan this QR code to view the app](https://expo.dev/preview/update?message=SDK+update&updateRuntimeVersion=1.0.0&createdAt=2025-10-01T02%3A11%3A05.930Z&slug=exp&projectId=ba97eb8d-f733-4ac9-b817-975a16122842&group=0f58ab30-7b57-438e-84df-307a22e605b7).
+1. **How to view the app:**
+   - Open the **Expo Go** app on your phone.
+   - Scan the QR code below using your phone’s camera or directly inside Expo Go.
+   - The app will automatically load the latest version.
 
-### If link is not working can scan here
+👉 [Click here to open the Expo preview](https://expo.dev/preview/update?message=SDK+update&updateRuntimeVersion=1.0.0&createdAt=2025-10-01T02%3A11%3A05.930Z&slug=exp&projectId=ba97eb8d-f733-4ac9-b817-975a16122842&group=0f58ab30-7b57-438e-84df-307a22e605b7)
 
-![QR code](./QR1-10-2025.jpg)<br />
+### If the link does not open, scan the QR code below:
 
-## Archtecture Diagram
+![QR code](./assets/readme/QR1-10-2025.jpg)
 
-The following show cases how we structured our code. It has 3 layers, a presentation layer consisting of 3 views auth (login/signup), todo list, and details view with all presentation logic housed. the second layer is a business logic that houses signup, login, useTodos which handles all CRUD logic related to the models stored in local storage using ayscneStores to access devices memory for long term storage. The database uses Nosql. We also have a global state which is a domain that access through out the app for tracking the users session interaction, example if logged in or not.
+---
 
-![alt text](./to-do-diagram.jpg)<br />
+## 🧩 Architecture Overview
 
-## Demo screen shots
+The app follows a **three-layer architecture** for maintainability and scalability:
 
-1. **Login/signup**: You can create a user or you can log in if your account already exist.
-   - Please note: that the buttons are disabled and greyed out until the user enters their details.
+1. **Presentation Layer:**
+   Contains three primary views — **Authentication (Login/Signup)**, **To-Do List**, and **Details** — handling all UI and presentation logic.
 
-![alt text](./demo-login.jpg)
+2. **Business Logic Layer:**
+   Manages core functionality such as **user signup**, **login**, and **CRUD operations** through custom hooks (`useTodos`).
+   It interacts with **AsyncStorage** to persist data locally on the device.
 
-2. **Email validation**:Emails that do not follow name@domain.com format will not be allowed to be entered as seen below. Also the buttons are now enabled allowing users to continue.
+3. **Domain / State Layer:**
+   Uses a **global state** to manage session data (e.g., logged-in status) and provide shared access across components.
 
-![alt text](./demo-email.jpg)
+> 🗄️ Data is stored using a **NoSQL-style structure** within local storage for lightweight persistence.
 
-3. **Password validation**:
-   Simple validation to check length of password (at least 6 charactors).
+**Architecture Diagram:**
 
-   - Please note: that the password is not displayed in the input due to iPhone security and does not allow for password screen shots when password inputs are detected
+<img src="./assets/readme/to-do-diagram.jpg" width="500"/>
 
-4. **User validation**:
-   You can not create an account if the account exists already. You can not login if there is no such account as well.
+---
 
-![alt text](./demo-userValidation.jpg)
+## 📸 App Demo Screenshots
 
-5. **Main page**:
-   Once the user has logged in they will be presented with the following screen
+### 🔹 1. Login / Signup
 
-![alt text](./demo-mainpage.jpg)
+Create an account or log in if you already have one.
 
-6. **Creating todos**:
-   Once the user has clicked the text input the button will also be enabled.
+> Buttons remain disabled (greyed out) until all required fields are entered.
 
-![alt text](./demo-creatingtodos.jpg)
+<img src="./assets/readme/demo-login.jpg" width="300"/>
 
-7. **Storing todo**:Once the add button is clicked, it will be stored then re-fetched from local storage also executing a validation check to see if it was stored correctly then displayed bellow as a list of todos.
+---
 
-- You can also toggle the tick to show that the todo is complete, this is also updated in local storage for persisting.
+### 🔹 2. Email Validation
 
-![alt text](./demo-sortingtodos.jpg)
+Emails that do not match the `name@domain.com` format are rejected.
+Once valid, the buttons become active.
 
-8. **Updating todos**:
-   If the user clicks the todo a modal pop up will be presented to allow users to update their todos as seen below.
+<img src="./assets/readme/demo-email.jpg" width="300"/>
 
-![alt text](./demo-updatingtodos.jpg)
+---
 
-9. **Deleting todos**:
-   a bin icon that allows users to delete their todos.
-   - This will then clear the ui and also remove the todo from the todos list of the logged in user.
+### 🔹 3. Password Validation
 
-![alt text](./demo-deletedotos.jpg)
+Passwords must be **at least 6 characters long**.
 
-10. **Deleting todos**:
-    As seen bellow, users can add their todos then logout or leave the app completely.
+> iPhone prevents screenshotting password fields for security, so the input is not visible in this image.
 
-![alt text](./demo-datapresistance.jpg)
+---
 
-Once the user relaunches the app and logs back in their todo’s will still be viewable, updateable and delectable
+### 🔹 4. User Validation
 
-![alt text](./demo-datapresistance2.jpg)
+The app prevents duplicate account creation and invalid logins.
 
-11. **Unit tests**:
-    tests focused on the logout and sign up logic to test
+<img src="./assets/readme/demo-userValidation.jpg" width="300"/>
 
-![alt text](./demo-tests.jpg)
+---
+
+### 🔹 5. Main Page
+
+Once logged in, users see their personal **To-Do List dashboard**.
+
+<img src="./assets/readme/demo-mainpage.jpg" width="300"/>
+
+---
+
+### 🔹 6. Creating To-Dos
+
+Typing in the input field automatically enables the **Add** button.
+
+<img src="./assets/readme/demo-creatingtodos.jpg" width="300"/>
+
+---
+
+### 🔹 7. Storing To-Dos
+
+When the Add button is clicked:
+
+- The to-do is stored and re-fetched from local storage.
+- A validation check confirms the data is saved.
+- Users can toggle tasks as completed ✅ (also persisted locally).
+
+<img src="./assets/readme/demo-sortingtodos.jpg" width="300"/>
+
+---
+
+### 🔹 8. Updating To-Dos
+
+Tap on any to-do to open a modal and update its content.
+
+<img src="./assets/readme/demo-updatingtodos.jpg" width="300"/>
+
+---
+
+### 🔹 9. Deleting To-Dos
+
+Use the 🗑️ **bin icon** to remove a task.
+This immediately updates both the UI and local storage.
+
+<img src="./assets/readme/demo-deletedotos.jpg" width="300"/>
+
+---
+
+### 🔹 10. Data Persistence
+
+To-dos are saved locally.
+Even after logging out or closing the app, tasks remain available when you log back in.
+
+<img src="./assets/readme/demo-datapresistance.jpg" width="300"/>
+<img src="./assets/readme/demo-datapresistance2.jpg" width="300"/>
+
+---
+
+### 🔹 11. Unit Tests
+
+Unit tests were written to verify **signup** and **logout** logic, ensuring core functionality works as expected.
+
+<img src="./assets/readme/demo-tests.jpg" width="300"/>
+
+---
+
+## 🧠 Key Features
+
+- ✅ Cross-platform (iOS & Android)
+- 🔐 Authentication (Signup / Login)
+- 🗂️ Persistent local storage (AsyncStorage)
+- ✏️ CRUD functionality for To-Dos
+- 🧮 Basic input validation
+- 🧪 Unit testing for key logic
+- 🧱 Modular architecture for scalability
+
+---
+
+## 👩‍💻 Tech Stack
+
+- **Frontend:** React Native (Expo), TypeScript
+- **State Management:** Zustand
+- **Storage:** AsyncStorage (NoSQL structure)
+- **Testing:** Jest
+- **IDE:** Visual Studio Code
+
+---
